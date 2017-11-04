@@ -1,16 +1,17 @@
 <template>
   <container class="order-detail">
     <group title="第三步：请提供您的个人信息" label-width="7em" label-margin-right="0.5em" label-align="center">
-      <x-input title="我的姓名<br/><span class='label-2'>(实名认证)</span>" text-align="right" v-model="value" placeholder="编辑"></x-input>
-      <x-input title="我的手机<br/><span class='label-2'>(也是本平台登陆账号)</span>" text-align="right" v-model="value" placeholder="编辑"></x-input>
-      <x-input title="我的地址<br/><span class='label-2'>(用于快递票据)</span>" text-align="right" v-model="value" placeholder="编辑"></x-input>
-      <x-input title="我的收款账号<br/><span class='label-2'>(用于收取佣金)</span>" text-align="right" v-model="value" placeholder="编辑"></x-input>
-      <cell title="我的证件图片" inline-desc="(用于资质认证)" is-link value="编辑" value-align="right" link="/registered/certification"></cell>
-      <cell title="我的从业经历" inline-desc="(用于评估经验)" is-link value="编辑" value-align="right" link="/registered/experience"></cell>
-      <x-input title="请设置一个登陆密码" type="password" placeholder="编辑" text-align="right" v-model="password"></x-input>
-      <x-input title="请重复输入密码" type="password" placeholder="编辑" text-align="right" v-model="password1"></x-input>
+      <x-input title="我的姓名<br/><span class='label-2'>(实名认证)</span>" v-model="value" placeholder="编辑"></x-input>
+      <x-input title="我的手机<br/><span class='label-2'>(也是本平台登陆账号)</span>" v-model="value" placeholder="编辑"></x-input>
+      <x-input title="我的地址<br/><span class='label-2'>(用于快递票据)</span>" v-model="value" placeholder="编辑"></x-input>
+      <x-input title="我的收款账号<br/><span class='label-2'>(用于收取佣金)</span>" v-model="value" placeholder="编辑"></x-input>
+      <x-input title="我的认证照片<br/><span class='label-2'>(用于资格认证)</span>" v-model="value" placeholder="编辑"></x-input>
+      <x-input title="我的姓名<br/><span class='label-2'>(实名认证)</span>" v-model="value" placeholder="编辑"></x-input>
+      <cell title="我的从业经历" inline-desc="(用于评估经验)" is-link value="编辑" value-align="left"></cell>
+      <x-input title="请设置一个登陆密码" type="password" placeholder="编辑" v-model="password"></x-input>
+      <x-input title="请重复输入密码" type="password" placeholder="编辑" v-model="password1"></x-input>
+      <divider class="tips">以上信息用于证明您的服务能力和资格，<br/>请确保提供的信息 真实有效，我们<br/>不会泄漏您的信息</divider>
     </group>
-    <divider class="tips">以上信息用于证明您的服务能力和资格，<br/>请确保提供的信息真实有效，我们<br/>不会泄漏您的信息</divider>
     <group>
       <cell-box>
         <x-button type="primary" :disabled="value.length === 0" @click.native="next">下一步</x-button>

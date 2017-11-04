@@ -7,6 +7,8 @@ import App from './App'
 import store from './store'
 import router from './router'
 import api from './api'
+import { LoadingPlugin } from 'vux'
+Vue.use(LoadingPlugin)
 
 Vue.use(VueRouter)
 Vue.prototype.$api = api

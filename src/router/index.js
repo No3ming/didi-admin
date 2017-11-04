@@ -11,6 +11,9 @@ import Login from '../views/Login.vue'
 import Step1 from '../views/Step1.vue'
 import Step2 from '../views/Step2.vue'
 import Step3 from '../views/Step3.vue'
+import Step4 from '../views/Step4.vue'
+import Certification from '../views/Certification.vue'
+import Experience from '../views/Experience.vue'
 import Forget from '../views/Forget.vue'
 
 import NotFound from '../views/NotFound.vue'
@@ -64,6 +67,21 @@ const routes = [
     path: '/registered/step3',
     name: 'step3',
     component: Step3
+  },
+  {
+    path: '/registered/step4',
+    name: 'step4',
+    component: Step4
+  },
+  {
+    path: '/registered/certification',
+    name: 'certification',
+    component: Certification
+  },
+  {
+    path: '/registered/experience',
+    name: 'experience',
+    component: Experience
   },
   {
     path: '/forget',
