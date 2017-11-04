@@ -1,5 +1,5 @@
 <template>
-  <grid>
+  <grid class="order-item">
     <grid-item  class="header-item">
       <span class="grid-center" v-html="order.name"></span>
     </grid-item>
@@ -10,7 +10,7 @@
       <span class="grid-center" v-html="order.price"></span>
     </grid-item>
     <grid-item  class="header-item">
-      <router-link class="grid-center" :to="'/order/detail/' + order.id" >可以抢单</router-link>
+      <router-link class="grid-center link" :to="'/order/detail/' + order.id" >可以抢单</router-link>
     </grid-item>
   </grid>
 </template>
@@ -35,5 +35,10 @@
   }
 </script>
 <style lang="less">
+  .order-item {
+    .link {
+      color: rgba(45, 168, 44, 0.67);
+    }
+  }
 
 </style>

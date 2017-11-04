@@ -26,6 +26,7 @@
 
 <style lang="less">
   @import '~vux/src/styles/reset.less';
+  @import './styles/color-theme.less';
 
   .app,
   .transition {
@@ -36,6 +37,7 @@
     left: 0;
     overflow: hidden;
     z-index: 11;
+    font-size: 14px;
   }
 
   .transition {
