@@ -1,6 +1,6 @@
 <template>
   <container class="order-detail">
-    <checklist :title="'第一步: 请选择你能提供的服务（可多选）'" :label-position="labelPosition" :required="true" :options="commonList" v-model="checklist" @on-change="change01" :max='1'></checklist>
+    <checklist :title="'第一步: 请选择你能提供的服务（可多选）'" :label-position="labelPosition" :required="true" :options="commonList" v-model="checklist" @on-change="change01"></checklist>
     <group>
       <cell-box>
         <x-button type="primary" :disabled="checklist.length === 0" @click.native="next">下一步</x-button>
@@ -27,6 +27,9 @@
     methods: {
       next () {
         this.$router.push('/registered/step2')
+      },
+      change01 (str) {
+        console.log(str)
       }
     },
     components: {

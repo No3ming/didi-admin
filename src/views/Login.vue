@@ -13,7 +13,7 @@
       </cell-box>
     </group>
     <flexbox class="link-to">
-      <flexbox-item class="link-box"><router-link to="/registered" class="link">注册和通过平台认证</router-link></flexbox-item>
+      <flexbox-item class="link-box"><router-link to="/registered/step1" class="link">注册和通过平台认证</router-link></flexbox-item>
       <flexbox-item class="link-box"><router-link to="/forget" class="link">忘记手机号码</router-link></flexbox-item>
     </flexbox>
   </container>

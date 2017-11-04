@@ -1,7 +1,7 @@
 <template>
   <container class="order-detail">
     <group :title="'第二步: 请选择你能提供的城市'">
-      <x-address :title="'第e二步: 请选择你能提供的城市'" @on-hide="logHide" v-model="value" :list="addressData" placeholder="请选择地址">
+      <x-address :title="'第e二步: 请选择你能提供的城市'" @on-hide="logHide" v-model="value" :list="addressData" placeholder="请选择地址" hide-district>
         <template slot="title" slot-scope="props"><!-- use scope="props" when vue < 2.5.0 -->
           <span :class="props.labelClass" :style="props.labelStyle" style="height:24px;">
           <span style="vertical-align:middle;">地址</span>

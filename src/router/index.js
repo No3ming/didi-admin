@@ -49,6 +49,11 @@ const routes = [
     component: OrderDetail
   },
   {
+    path: '/',
+    name: 'login',
+    component: Login
+  },
+  {
     path: '/login',
     name: 'login',
     component: Login
