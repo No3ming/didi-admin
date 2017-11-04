@@ -1,0 +1,84 @@
+<template>
+  <container class="login">
+    <blur :blur-amount=40 :url="url">
+      <p class="center"><img :src="url"></p>
+    </blur>
+    <group label-width="3em" label-margin-right="2em" label-align="right">
+      <x-input title="手机" placeholder="您注册时的手机号码" v-model="number"></x-input>
+      <x-input title="密码" placeholder="您注册时使用的密码" v-model="passWord"></x-input>
+    </group>
+    <group>
+      <cell-box>
+        <x-button type="primary">登陆</x-button>
+      </cell-box>
+    </group>
+    <flexbox class="link-to">
+      <flexbox-item class="link-box"><router-link to="/registered" class="link">注册和通过平台认证</router-link></flexbox-item>
+      <flexbox-item class="link-box"><router-link to="/forget" class="link">忘记手机号码</router-link></flexbox-item>
+    </flexbox>
+  </container>
+</template>
+
+<script>
+  import Container from '../components/Container.vue'
+  import { Blur, Group, Cell, XInput, XButton, CellBox, Flexbox, FlexboxItem } from 'vux'
+  import defaultImg from '@/assets/header.jpg'
+
+  export default {
+    name: 'login',
+    data () {
+      return {
+        url: defaultImg,
+        number: '',
+        passWord: ''
+      }
+    },
+    components: {
+      Container,
+      Blur,
+      Group,
+      Cell,
+      XInput,
+      XButton,
+      CellBox,
+      FlexboxItem,
+      Flexbox
+    }
+  }
+</script>
+
+<style lang="less">
+  .login {
+    .center {
+      text-align: center;
+      padding-top: 20px;
+      color: #fff;
+      font-size: 18px;
+    }
+    .center img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      border: 4px solid #ececec;
+    }
+
+    .link-to {
+      padding: 10px 0;
+    }
+
+    .link-box {
+      padding: 10px;
+    }
+
+    .link {
+      display: block;
+      width: 100%;
+      height: 30px;
+      line-height: 30px;
+      text-align: center;
+      border: 1px solid #46b8da;
+      border-radius: 3px;
+      color: #46b8da;
+    }
+  }
+</style>

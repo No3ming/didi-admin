@@ -1,6 +1,6 @@
 <template>
   <grid class="order-item">
-    <grid-item  class="header-item">
+    <grid-item class="header-item">
       <span class="grid-center" v-html="order.name"></span>
     </grid-item>
     <grid-item  class="header-item">
@@ -36,6 +36,7 @@
 </script>
 <style lang="less">
   .order-item {
+    background-color: #fff;
     .link {
       color: rgba(45, 168, 44, 0.67);
     }

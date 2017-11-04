@@ -1,9 +1,9 @@
 <template>
   <container class="contain-nav canOrder">
     <div style="height:44px;">
-        <grid>
+        <grid class="order-header">
           <grid-item v-for="(item, index) in gridHeader" :key="index" class="header-item">
-            <span class="grid-center" v-html="item"></span>
+            <span class="grid-center info" v-html="item"></span>
           </grid-item>
         </grid>
     </div>
@@ -43,6 +43,9 @@
 
 <style lang="less">
   .canOrder {
+    .order-header {
+      background-color: #fff;
+    }
     .header-item {
       padding: 0;
       font-size: 14px;
