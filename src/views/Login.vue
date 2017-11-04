@@ -9,7 +9,7 @@
     </group>
     <group>
       <cell-box>
-        <x-button type="primary">登陆</x-button>
+        <x-button type="primary" @click.native="onLogin">登陆</x-button>
       </cell-box>
     </group>
     <flexbox class="link-to">
@@ -31,6 +31,21 @@
         url: defaultImg,
         number: '',
         passWord: ''
+      }
+    },
+    methods: {
+      onLogin () {
+        let self = this
+        this.$vux.alert.show({
+          title: '登陆成功',
+          onShow () {
+            console.log('Plugin: I\'m showing')
+          },
+          onHide () {
+            self.$router.push('/canOrder')
+            console.log('Plugin: I\'m hiding')
+          }
+        })
       }
     },
     components: {
