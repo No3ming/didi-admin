@@ -10,7 +10,7 @@
       <span class="grid-center" v-html="order.price"></span>
     </grid-item>
     <grid-item  class="header-item">
-      <router-link class="grid-center link" :to="'/order/detail/' + order.id" >可以抢单</router-link>
+      <router-link class="grid-center success" :to="'/order/detail/' + order.id" >可以抢单</router-link>
     </grid-item>
   </grid>
 </template>
