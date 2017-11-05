@@ -8,26 +8,36 @@
       </grid>
     </div>
     <div>
+      <div>待结算金额总额：<span v-html="total"></span></div>
       <order-item v-for="(item, index) in orders" :key="index" :order="item"></order-item>
     </div>
-    <divider class="no-more">已经没有更多数据了</divider>
+    <divider class="no-more">没有更多数据了</divider>
+    <div>
+      <group>
+        <cell-box>
+          <x-button type="primary" >立即提现</x-button>
+        </cell-box>
+      </group>
+    </div>
   </container>
 </template>
 
 <script>
   import Container from '../components/Container.vue'
-  import { Sticky, Grid, GridItem, Divider } from 'vux'
+  import { Sticky, Group, CellBox, XButton, Grid, GridItem, Divider } from 'vux'
   import OrderItem from '../components/OrderItem.vue'
 
   export default {
-    name: 'progress',
+    name: 'canOrder',
     data: () => {
       return {
-        gridHeader: ['客户名字', '服务项目', '服务佣金', '订单状态'],
+        gridHeader: ['客户姓名', '项目', '佣金', '状态'],
         orders: [
-          {id: 1, name: '张学友', type: '工商注册', price: 1000, status: 1, progress: '0/12'},
-          {id: 2, name: '张学友1', type: '工商服务', price: 1200, status: 1, progress: '0/12'}
-        ]
+          {id: 1, name: '张学友', type: '工商注册', price: 1000, status: 3},
+          {id: 2, name: '张学友1', type: '工商服务', price: 1200, status: 4},
+          {id: 2, name: '张学友1', type: '工商服务', price: 1200, status: 5}
+        ],
+        total: 10000
       }
     },
     components: {
@@ -36,7 +46,10 @@
       Grid,
       GridItem,
       OrderItem,
-      Divider
+      Divider,
+      Group,
+      CellBox,
+      XButton
     }
   }
 </script>

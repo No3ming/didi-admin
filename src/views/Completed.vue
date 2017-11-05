@@ -10,7 +10,7 @@
     <div>
       <order-item v-for="(item, index) in orders" :key="index" :order="item"></order-item>
     </div>
-    <divider class="no-more">已经没有更多数据了</divider>
+    <divider class="no-more">没有更多数据了</divider>
   </container>
 </template>
 
@@ -23,10 +23,11 @@
     name: 'canOrder',
     data: () => {
       return {
-        gridHeader: ['客户名字', '服务项目', '服务佣金', '订单状态'],
+        gridHeader: ['客户姓名', '服务项目', '服务佣金', '佣金状态'],
         orders: [
-          {id: 1, name: '张学友', type: '工商注册', price: 1000, status: 0},
-          {id: 2, name: '张学友1', type: '工商服务', price: 1200, status: 0}
+          {id: 1, name: '张学友', type: '工商注册', price: 1000, status: 3},
+          {id: 2, name: '张学友1', type: '工商服务', price: 1200, status: 4},
+          {id: 2, name: '张学友1', type: '工商服务', price: 1200, status: 5}
         ]
       }
     },

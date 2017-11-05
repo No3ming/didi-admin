@@ -7,13 +7,14 @@ import CanOrder from '../views/CanOrder.vue'
 import Progress from '../views/Progress.vue'
 import Completed from '../views/Completed.vue'
 import OrderDetail from '../views/OrderDetail.vue'
+import OrderDetailStep from '../views/OrderDetailStep.vue'
 import Login from '../views/Login.vue'
 import Step1 from '../views/Step1.vue'
 import Step2 from '../views/Step2.vue'
 import Step3 from '../views/Step3.vue'
 import Step4 from '../views/Step4.vue'
 import Certification from '../views/Certification.vue'
-import Experience from '../views/Experience.vue'
+import Amount from '../views/Amount.vue'
 import Forget from '../views/Forget.vue'
 
 import NotFound from '../views/NotFound.vue'
@@ -47,6 +48,11 @@ const routes = [
     path: '/order/detail/:id',
     name: 'detail',
     component: OrderDetail
+  },
+  {
+    path: '/order-detail-step/:id',
+    name: 'orderDetailStep',
+    component: OrderDetailStep
   },
   {
     path: '/',
@@ -84,14 +90,14 @@ const routes = [
     component: Certification
   },
   {
-    path: '/registered/experience',
-    name: 'experience',
-    component: Experience
-  },
-  {
     path: '/forget',
     name: 'forget',
     component: Forget
+  },
+  {
+    path: '/personal/amount/:id',
+    name: 'amount',
+    component: Amount
   },
   {
     path: '*',
