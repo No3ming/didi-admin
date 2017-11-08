@@ -11,6 +11,7 @@
 
 <script>
   import { mapGetters } from 'vuex'
+  import './assets/font/iconfont.css'
 
   export default {
     name: 'app',

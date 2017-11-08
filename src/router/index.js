@@ -45,12 +45,12 @@ const routes = [
     }
   },
   {
-    path: '/order/detail/:id',
+    path: '/order/detail',
     name: 'detail',
     component: OrderDetail
   },
   {
-    path: '/order-detail-step/:id',
+    path: '/order-detail-step',
     name: 'orderDetailStep',
     component: OrderDetailStep
   },
@@ -114,6 +114,21 @@ router.afterEach(to => {
   switch (to.path) {
     case '/canOrder':
       document.title = '我要接单'
+      break
+    case '/progress':
+      document.title = '进行中的订单'
+      break
+    case '/completed':
+      document.title = '完成的订单'
+      break
+    case '/order/detail':
+      document.title = '订单详情'
+      break
+    case '/registered/step1':
+    case '/registered/step2':
+    case '/registered/step3':
+    case '/registered/certification':
+      document.title = '进行认证'
       break
     case '/not-found':
       document.title = '404'

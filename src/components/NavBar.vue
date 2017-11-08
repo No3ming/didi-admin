@@ -1,17 +1,17 @@
 <template>
   <div class="nav-bar one-px-top">
     <router-link class="nav-bar-item" to="/canOrder">
-      <icon type="success"></icon>
+      <x-icon type="ios-information"></x-icon>
       <p class="nav-bar-label">可抢的订单</p>
     </router-link>
     <router-link class="nav-bar-item" to="/progress">
-      <icon type="success"></icon>
+      <i class="icon-qiangdan"></i>
       <p class="nav-bar-label">进行中的订单</p>
     </router-link>
     <router-link class="nav-bar-item" to="/completed">
       <span class="badge-box">
-         <icon type="success"></icon>
-          <badge text="888" class="badge"></badge>
+        <i class="icon-progress"></i>
+        <badge text="88" class="badge"></badge>
       </span>
       <p class="nav-bar-label">完成的订单</p>
     </router-link>
@@ -19,12 +19,11 @@
 </template>
 
 <script>
-  import { Icon, Badge } from 'vux'
+  import { Badge } from 'vux'
 
   export default {
     name: 'nav-bar',
     components: {
-      Icon,
       Badge
     }
   }
@@ -52,6 +51,7 @@
     flex: 1;
     text-align: center;
     font-size: 22px;
+    line-height: 22px;
     i {
       font-size: 22px;
       color: #C2C2C3;
@@ -66,7 +66,10 @@
   .router-link-active {
     i,
     .nav-bar-label {
-      color: #F23030;
+      color: #46b8da;
+    }
+    .vux-x-icon {
+      fill: #46b8da;
     }
   }
 

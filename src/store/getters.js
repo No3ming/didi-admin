@@ -4,3 +4,5 @@
 export const direction = state => state.direction
 
 export const transitionName = state => state.transitionName
+
+export const serviceList = state => state.serviceList

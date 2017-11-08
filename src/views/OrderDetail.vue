@@ -38,7 +38,7 @@
     <div v-if="order.status === 1">
       <group>
         <cell-box>
-          <x-button plain type="primary" :link="'/order-detail-step/' + order.id">完成进度：<span>0/3</span></x-button>
+          <x-button plain type="primary" :link="'/order-detail-step?id=' + order.id">完成进度：<span>0/3</span></x-button>
         </cell-box>
         <cell-box>
           <x-button type="primary">完成订单</x-button>

@@ -1,53 +1,27 @@
 <template>
   <container class="certification">
-    <group title="请选择操作类型">
-      <selector placeholder="请选择操作类型" v-model="doType" :options="doTypeList"></selector>
+    <group title="备注1">
+      <x-textarea :max="100" placeholder="提示" v-model="Remarks1"></x-textarea>
     </group>
-    <group label-width="5em" label-margin-right="0.5em">
-      <selector title="车牌类型" :options="careTypeList" v-model="careType"></selector>
-      <grid>
-        <grid-item class="care-item">
-          <selector title="车牌号码" :options="careNumBerTypeList" v-model="careNumBerType"></selector>
-        </grid-item>
-        <grid-item class="care-item">
-          <x-input v-model="careNumber" placeholder="请输入车牌号码"></x-input>
-        </grid-item>
-      </grid>
-      <x-input title="车架号码" v-model="frameNumber" placeholder="请输入车架号后4位"></x-input>
-      <x-input title="车主姓名" v-model="frameNumber" placeholder="请输入车主姓名"></x-input>
-      <x-input title="身份证号" v-model="frameNumber" placeholder="(车主身份证)外籍人士请在证件号前加F"></x-input>
+    <group title="备注2">
+      <x-textarea :max="100" placeholder="提示" v-model="Remarks2"></x-textarea>
     </group>
     <group-title>请按提示上传以下证件照片</group-title>
     <grid class="upload-box">
-      <grid-item label="证件正面">
+      <grid-item>
         <vue-core-image-upload
           :crop="false"
           @imageuploaded="zhenguploaded"
           @imagechanged="imagechanged"
           :max-file-size="5242880"
           url="" >
-          <img :src="uploadZheng?uploadZheng:zheng" class="icon-upload">
+          <x-button type="primary">点击上传</x-button>
         </vue-core-image-upload>
       </grid-item>
-      <grid-item label="证件反面">
-        <vue-core-image-upload
-          :crop="false"
-          @imageuploaded="zhenguploaded"
-          @imagechanged="imagechanged"
-          :max-file-size="5242880"
-          url="" >
-        <img :src="uploadFan?uploadFan:fan" class="icon-upload">
-        </vue-core-image-upload>
-      </grid-item>
-      <grid-item label="自拍照片">
-        <vue-core-image-upload
-          :crop="false"
-          @imageuploaded="zhenguploaded"
-          @imagechanged="imagechanged"
-          :max-file-size="5242880"
-          url="" >
-          <img :src="uploadTou?uploadTou:touXiang" class="icon-upload">
-        </vue-core-image-upload>
+    </grid>
+    <grid>
+      <grid-item v-for="(item, i) in imgList" :key="i">
+        <img :src="item.src" alt=""/>
       </grid-item>
     </grid>
     <group>
@@ -61,9 +35,6 @@
 <script>
   import Container from '../components/Container.vue'
   import VueCoreImageUpload from 'vue-core-image-upload'
-  import zheng from '@/assets/zheng.png'
-  import fan from '@/assets/fan.png'
-  import touXiang from '@/assets/touxiang.png'
   import { CellBox, Divider, XInput, Group, GroupTitle, Grid, GridItem, XButton, Cell, Checklist, XAddress, XTextarea, Selector } from 'vux'
 
   export default {
@@ -71,16 +42,9 @@
     data () {
       return {
         doType: 1,
-        doTypeList: [{key: 1, value: '绑定他人车辆'}, {key: 2, value: '绑定其他'}],
-        careTypeList: [{key: 1, value: '蓝牌'}, {key: 2, value: '黄牌'}],
-        careType: 1,
-        careNumBerTypeList: [{key: 1, value: '粤'}, {key: 2, value: '贵'}],
-        careNumBerType: 1,
-        careNumber: '',
-        frameNumber: '',
-        zheng: zheng,
-        fan: fan,
-        touXiang: touXiang,
+        Remarks1: '',
+        Remarks2: '',
+        imgList: [],
         uploadZheng: '',
         uploadFan: '',
         uploadTou: ''

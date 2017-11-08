@@ -5,3 +5,7 @@
 export const showLoading = ({ commit }) => {
   commit('UPDATE_LOADING', { status: true })
 }
+
+export const upServiceList = ({ commit }, serviceList) => {
+  commit('UPDATE_SERVICE_LIST', serviceList)
+}
