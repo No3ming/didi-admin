@@ -1,19 +1,32 @@
 <template>
-  <container class="order-detail">
+  <container class="step3">
     <group title="第三步：请提供您的个人信息" label-width="7em" label-margin-right="0.5em" label-align="center">
-      <x-input title="我的姓名<br/><span class='label-2'>(实名认证)</span>" text-align="right" v-model="value" placeholder="编辑"></x-input>
-      <x-input title="我的手机<br/><span class='label-2'>(也是本平台登陆账号)</span>" text-align="right" v-model="value" placeholder="编辑"></x-input>
-      <x-input title="我的地址<br/><span class='label-2'>(用于快递票据)</span>" text-align="right" v-model="value" placeholder="编辑"></x-input>
-      <x-input title="我的收款账号<br/><span class='label-2'>(用于收取佣金)</span>" text-align="right" v-model="value" placeholder="编辑"></x-input>
-      <cell title="我的证件图片" inline-desc="(用于资质认证)" value="编辑" value-align="right" link="/registered/certification"></cell>
-      <cell title="我的从业经历" inline-desc="(用于评估经验)" value="编辑" value-align="right" @click.native="textStatus(true)"></cell>
-      <x-input title="请设置一个登陆密码" type="password" placeholder="编辑" text-align="right" v-model="password"></x-input>
-      <x-input title="请重复输入密码" type="password" placeholder="编辑" text-align="right" v-model="password1"></x-input>
+      <x-input title="我的姓名<br/><span class='label-2'>(实名认证)</span>" text-align="right" @on-change="onRealName" v-model="realname1"
+               placeholder="编辑" required ref="realname"></x-input>
+      <x-input required is-type="china-mobile" :max="13" title="我的手机<br/><span class='label-2'>(也是本平台登陆账号)</span>" @on-change="onPhone" text-align="right" ref="phone" v-model="phone1"
+               placeholder="编辑"></x-input>
+      <x-input required ref="address" title="我的地址<br/><span class='label-2'>(用于快递票据)</span>" @on-change="onAddress" text-align="right" v-model="address1"
+               placeholder="编辑"></x-input>
+      <cell title="我的证件图片" inline-desc="(用于资质认证)" value-align="right" link="/registered/certification">
+        <span v-show="certificateImgs.length === 0">编辑</span>
+        <div v-show="certificateImgs.length > 0">
+          <img v-for="(item, i) in certificateImgs" :src="item.url" :key="i" class="img-item"/>
+        </div>
+      </cell>
+      <cell title="我的从业经历" inline-desc="(用于评估经验)" value-align="right"
+            @click.native="textStatus(true)">
+        <span v-show="workingExperienceImgs1.length === 0">编辑</span>
+        <div v-show="workingExperienceImgs1.length > 0">
+          <img v-for="(item, i) in workingExperienceImgs1" :src="item.url" :key="i" class="img-item"/>
+        </div>
+      </cell>
+      <x-input required ref="password1" title="请设置一个登陆密码" type="password" @on-change="onPassword" placeholder="编辑" text-align="right" v-model="password1"></x-input>
+      <x-input required ref="password2" title="请重复输入密码" type="password" placeholder="编辑" :is-type="onComirePassword" text-align="right" v-model="password2"></x-input>
     </group>
     <divider class="tips">以上信息用于证明您的服务能力和资格，<br/>请确保提供的信息真实有效，我们<br/>不会泄漏您的信息</divider>
     <group>
       <cell-box>
-        <x-button type="primary" :disabled="value.length === 0" @click.native="next">下一步</x-button>
+        <x-button type="primary" :disabled="isNext" @click.native="next">下一步</x-button>
       </cell-box>
     </group>
     <div class="text-box" v-show="isShow">
@@ -21,22 +34,25 @@
         <x-button type="primary" mini @click.native="textStatus(false)">保存</x-button>
       </div>
       <group class="text-container">
-        <x-textarea ref="textarea" :rows="10" :max="200" :placeholder="'placeholder'" @on-focus="onEvent('focus')" @on-blur="onEvent('blur')"></x-textarea>
+        <x-textarea ref="textarea" required :rows="10" :max="500" :placeholder="'我的经历'" @on-focus="onEvent('focus')"
+                    @on-blur="onEvent('blur')" @on-change="onWorkingExperience" v-model="workingExperience1"></x-textarea>
       </group>
       <grid class="clearfix">
         <grid-item class="xiangji-box">
           <vue-core-image-upload
             :crop="false"
             class="xiangji"
+            :data="uploadData"
+            inputOfFile="file"
             @imageuploaded="miniUploaded"
             @imagechanged="miniChanged"
-            :max-file-size="5242880"
-            url="" >
+            url="/api/upload">
             <img :src="xiangJi" class="icon-upload">
           </vue-core-image-upload>
         </grid-item>
         <grid-item class="miniImg-box">
-          <img :src="nimiImg" alt="缩略图" class="miniImg"/>
+          <span class="miniImg" v-show="workingExperienceImgs1.length === 0">无</span>
+          <img v-for="(item, i) in workingExperienceImgs1" :src="item.url" alt="缩略图" class="miniImg"/>
         </grid-item>
       </grid>
     </div>
@@ -47,23 +63,77 @@
   import Container from '../components/Container.vue'
   import VueCoreImageUpload from 'vue-core-image-upload'
   import xiangJi from '@/assets/xiangji.png'
-  import { CellBox, Divider, XInput, Group, GroupTitle, Grid, GridItem, XButton, Cell, Checklist, XAddress, XTextarea } from 'vux'
+  import {
+    CellBox,
+    Divider,
+    XInput,
+    Group,
+    GroupTitle,
+    Grid,
+    GridItem,
+    XButton,
+    Cell,
+    Checklist,
+    XAddress,
+    XTextarea
+  } from 'vux'
+  import { mapActions, mapGetters } from 'vuex'
 
   export default {
     name: 'detail',
     data () {
       return {
-        value: '',
-        password: '',
+        realname1: '',
+        phone1: '',
+        address1: '',
+        workingExperience1: '',
+        workingExperienceImgs1: [],
         password1: '',
+        password2: '',
         isShow: false,
         xiangJi: xiangJi,
-        nimiImg: ''
+        uploadData: {
+          type: 2
+        }
       }
     },
     methods: {
+      onRealName (value) {
+        this.upRealname(value)
+      },
+      onPhone (value) {
+        this.upPhone(value)
+      },
+      onAddress (value) {
+        this.upAddress(value)
+      },
+      onWorkingExperience (value) {
+        this.upWorkingExperience(value)
+      },
+      onWorkingExperienceImgs (value) {
+        this.upWorkingExperienceImgs(value)
+      },
+      onPassword (value) {
+        this.upPassword(value)
+      },
+      onComirePassword (value) {
+        if (!value) {
+          return {valid: false, msg: '密码不能为空'}
+        } else if (value !== this.password1) {
+          return {valid: false, msg: '密码不一致'}
+        } else {
+          return {valid: true}
+        }
+      },
       next () {
-        this.$router.push('/registered/step4')
+        if (this.$refs.realname.valid && this.$refs.phone.valid && this.$refs.password1.valid && this.$refs.password2.valid && this.$refs.address.valid) {
+          this.$router.push('/registered/step4')
+        } else {
+          this.$vux.alert.show({
+            title: '提示',
+            content: '填写不正确'
+          })
+        }
       },
       logHide (str) {
         console.log(this.value)
@@ -73,16 +143,56 @@
         if (status) {
           this.$refs.textarea.focus()
         }
+        this.upWorkingExperienceImgs(this.workingExperienceImgs1)
+        this.upWorkingExperience(this.workingExperience1)
       },
       onEvent (tips) {
         console.log(tips)
       },
-      miniUploaded () {
-        console.log(12)
+      miniUploaded (res) {
+        this.$vux.loading.hide()
+        if (res.code === 20000) {
+          this.workingExperienceImgs1 = this.workingExperienceImgs1.concat(res.data)
+        } else {
+          console.log('err')
+        }
       },
       miniChanged () {
-        console.log(12)
-      }
+        this.$vux.loading.show({
+          text: 'Loading'
+        })
+        console.log('loading')
+      },
+      ...mapActions([
+        'upRealname',
+        'upPhone',
+        'upAddress',
+        'upWorkingExperience',
+        'upWorkingExperienceImgs',
+        'upPassword'
+      ])
+    },
+    mounted () {
+      this.realname1 = this.realname
+      this.phone1 = this.phone
+      this.address1 = this.address
+      this.workingExperience1 = this.workingExperience
+      this.workingExperienceImgs1 = this.workingExperienceImgs
+      this.password1 = this.password
+      this.password2 = this.password
+    },
+    computed: {
+      isNext () {
+        return !(this.realname1 && this.phone1 && this.address1 && this.workingExperience1 && this.certificateImgs && this.workingExperienceImgs1 && this.password1 && this.password2 && this.password1 === this.password2)
+      },
+      ...mapGetters([
+        'certificateImgs',
+        'workingExperienceImgs',
+        'workingExperience',
+        'realname',
+        'phone',
+        'address'
+      ])
     },
     components: {
       Container,
@@ -104,7 +214,7 @@
 </script>
 
 <style lang="less">
-  .order-detail {
+  .step3 {
     .order-cell {
       background-color: #fff;
     }
@@ -190,6 +300,18 @@
       overflow: hidden;
       font-size: 10px;
       text-align: center;
+    }
+
+    .img-item {
+      width: 20px;
+      height: 20px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      margin: 1px;
+    }
+
+    .weui-cell__bd {
+      font-size: 14px;
     }
   }
 

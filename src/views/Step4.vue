@@ -1,16 +1,34 @@
 <template>
-  <container class="order-detail">
+  <container class="step4">
     <group title="预览您即将提交的信息(如需修改信息请联系客服，电话189388318838)" label-width="7em" label-margin-right="0.5em" label-align="center">
-      <x-input title="我的项目" text-align="right" v-model="value" placeholder="编辑"></x-input>
-      <x-input title="我的服务的城市" text-align="right" v-model="value" placeholder="编辑"></x-input>
-      <x-input title="我的姓名" text-align="right" v-model="value" placeholder="编辑"></x-input>
-      <x-input title="我的手机" text-align="right" v-model="value" placeholder="编辑"></x-input>
-      <x-input title="我的地址" text-align="right" v-model="value" placeholder="编辑"></x-input>
-      <x-input title="我的支付宝账号" text-align="right" v-model="value" placeholder="编辑"></x-input>
-      <cell title="我的证件照片" value="编辑" value-align="right" link="/registered/certification"></cell>
-      <cell title="我的从业经历" value="编辑" value-align="right" @click.native="textStatus(true)"></cell>
-      <x-input title="请设置一个登陆密码" type="password" placeholder="编辑" text-align="right" v-model="password"></x-input>
-      <x-input title="请重复输入密码" type="password" placeholder="编辑" text-align="right" v-model="password1"></x-input>
+      <cell title="我的项目" value-align="right" link="/registered/step1">
+        <span v-show="services.length === 0">编辑</span>
+        <div v-show="services.length > 0">
+          <span v-for="(item, i) in services" v-html="item + ' '"></span>
+        </div>
+      </cell>
+      <cell title="我的服务的城市" value-align="right" link="/registered/step2">
+        <span v-show="serveCitys.length === 0">编辑</span>
+        <div v-show="serveCitys.length > 0">
+          <span v-for="(item, i) in serveCitys" v-html="item + ' '"></span>
+        </div>
+      </cell>
+      <cell title="我的姓名" :value="realname" value-align="right" link="/registered/step3"></cell>
+      <cell title="我的手机" :value="phone" value-align="right" link="/registered/step3"></cell>
+      <cell title="我的地址" :value="address" value-align="right" link="/registered/step3"></cell>
+      <cell title="我的证件照片" value-align="right" link="/registered/step3">
+        <span v-show="certificateImgs.length === 0">编辑</span>
+        <div v-show="certificateImgs.length > 0">
+          <img v-for="(item, i) in certificateImgs" :src="item.url" :key="i" class="img-item"/>
+        </div>
+      </cell>
+      <cell title="我的从业经历" value-align="right" link="/registered/step3">
+        <span v-show="workingExperienceImgs.length === 0">编辑</span>
+        <div v-show="workingExperienceImgs.length > 0">
+          <img v-for="(item, i) in workingExperienceImgs" :src="item.url" :key="i" class="img-item"/>
+        </div>
+      </cell>
+      <cell title="登陆密码" value="******" value-align="right" link="/registered/step3"></cell>
     </group>
     <divider class="tips">以上信息用于证明您的服务能力和资格，<br/>请确保提供的信息真实有效，我们<br/>不会泄漏您的信息</divider>
     <group>
@@ -18,50 +36,35 @@
         <x-button type="primary" @click.native="onSure">确认提交</x-button>
       </cell-box>
     </group>
-    <div class="text-box" v-show="isShow">
-      <div class="text-header">
-        <x-button type="primary" mini @click.native="textStatus(false)">保存</x-button>
-      </div>
-      <group class="text-container">
-        <x-textarea ref="textarea" :rows="10" :max="200" :placeholder="'placeholder'" @on-focus="onEvent('focus')" @on-blur="onEvent('blur')"></x-textarea>
-      </group>
-      <grid class="clearfix">
-        <grid-item class="xiangji-box">
-          <vue-core-image-upload
-            :crop="false"
-            class="xiangji"
-            @imageuploaded="miniUploaded"
-            @imagechanged="miniChanged"
-            :max-file-size="5242880"
-            url="" >
-            <img :src="xiangJi" class="icon-upload">
-          </vue-core-image-upload>
-        </grid-item>
-        <grid-item class="miniImg-box">
-          <img :src="nimiImg" alt="缩略图" class="miniImg"/>
-        </grid-item>
-      </grid>
-    </div>
   </container>
 </template>
 
 <script>
   import Container from '../components/Container.vue'
   import VueCoreImageUpload from 'vue-core-image-upload'
-  import xiangJi from '@/assets/xiangji.png'
-  import { CellBox, Divider, XInput, Group, GroupTitle, Grid, GridItem, XButton, Cell, Checklist, XAddress, XTextarea } from 'vux'
+  import { CellBox, Divider, XInput, Group, GroupTitle, Grid, GridItem, XButton, Cell, Checklist, XAddress, XTextarea, ChinaAddressV4Data } from 'vux'
+  import { mapGetters } from 'vuex'
 
   export default {
     name: 'detail',
     data () {
       return {
-        value: '',
-        password: '',
-        password1: '',
-        isShow: false,
-        xiangJi: xiangJi,
-        nimiImg: ''
+        services: [],
+        serveCitys: [],
+        commonList: [{ key: 1, value: '工商注册/变更' }, {key: 2, value: '记账报税'}, {key: 3, value: '商标注册/知识产权'}, {key: 4, value: '我不知道'}]
       }
+    },
+    mounted () {
+      this.services = this.serviceList.map((item, i) => {
+        return this.commonList[item].value
+      })
+      ChinaAddressV4Data.forEach((item, i) => {
+        this.serveCityId.forEach((value, i) => {
+          if (item.value === value) {
+            this.serveCitys.push(item.name)
+          }
+        })
+      })
     },
     methods: {
       next () {
@@ -100,6 +103,18 @@
         })
       }
     },
+    computed: {
+      ...mapGetters([
+        'certificateImgs',
+        'workingExperienceImgs',
+        'workingExperience',
+        'realname',
+        'phone',
+        'address',
+        'serveCityId',
+        'serviceList'
+      ])
+    },
     components: {
       Container,
       CellBox,
@@ -120,7 +135,7 @@
 </script>
 
 <style lang="less">
-  .order-detail {
+  .step4 {
     .order-cell {
       background-color: #fff;
     }
@@ -206,6 +221,18 @@
       overflow: hidden;
       font-size: 10px;
       text-align: center;
+    }
+
+    .weui-cell__ft {
+      font-size: 14px;
+    }
+
+    .img-item {
+      width: 20px;
+      height: 20px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      margin: 1px;
     }
   }
 

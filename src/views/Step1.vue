@@ -19,7 +19,7 @@
     data () {
       return {
         labelPosition: '',
-        commonList: [ '工商注册／变更', '记账报税', '只是产权注册' ],
+        commonList: [{ key: 1, value: '工商注册／变更' }, {key: 2, value: '记账报税'}, {key: 3, value: '商标注册／知识产权'}, {key: 4, value: '我不知道'}],
         checks: [],
         value_0_1: [],
         addressData: ChinaAddressV4Data

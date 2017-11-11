@@ -4,8 +4,11 @@
 import service from './service'
 
 const api = {
-  getTest (payload) {
-    return service.post('/api/test', payload)
+  registered (payload) {
+    return service.post('/accountant/register', payload)
+  },
+  login (payload) {
+    return service.post('accountant/login', payload)
   }
 }
 

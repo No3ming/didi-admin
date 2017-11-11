@@ -26,8 +26,11 @@ if (!authorization) {
   window.sessionStorage.setItem('authorization', JSON.stringify(authorization))
 }
 
+let token = window.sessionStorage.getItem('authorization')
 // 设置请求公共参数
 axios.defaults.timeout = 10000
+axios.defaults.baseUrl = '/api'
+axios.defaults.params = {token: 1231231}
 axios.defaults.headers.post['Content-Type'] = 'application/json'
 axios.defaults.data = {...JSON.parse(window.sessionStorage.getItem('authorization'))}
 
@@ -58,10 +61,10 @@ export default {
     Object.keys(param).forEach(item => {
       query.push(`${item}=${encodeURIComponent(param[item])}`)
     })
-    let params = query.length ? '?' + query.join('&') : ''
+    let params = query.length ? '?token=' + token + '&' + query.join('&') : '?token=' + token
     return axios.get(url + params).then(parseResponse).then(checkStatus).catch(error => handleError(error))
   },
   post (url, params = {}) {
-    return axios.post(url, params).then(parseResponse).then(checkStatus).catch(error => handleError(error))
+    return axios.post(url + '?token=' + token, params).then(parseResponse).then(checkStatus).catch(error => handleError(error))
   }
 }

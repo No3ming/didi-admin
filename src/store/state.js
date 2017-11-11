@@ -3,5 +3,13 @@
  */
 export default {
   transitionName: 'fade',
-  serviceList: []
+  serviceList: [],
+  serveCityId: [],
+  address: '',
+  certificateImgs: [],
+  workingExperienceImgs: [],
+  workingExperience: '',
+  realname: '',
+  phone: '',
+  password: ''
 }

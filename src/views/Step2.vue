@@ -1,7 +1,7 @@
 <template>
-  <container class="order-detail">
+  <container class="step2">
     <group :title="'第二步: 请选择你能提供的城市'">
-      <x-address :title="'第e二步: 请选择你能提供的城市'" @on-hide="logHide" v-model="value" :list="addressData" placeholder="请选择地址" hide-district>
+      <x-address :title="'第e二步: 请选择你能提供的城市'" @on-hide="logHide" v-model="value" :list="addressData" placeholder="请选择地址" >
         <template slot="title" slot-scope="props"><!-- use scope="props" when vue < 2.5.0 -->
           <span :class="props.labelClass" :style="props.labelStyle" style="height:24px;">
           <span style="vertical-align:middle;">地址</span>
@@ -20,22 +20,35 @@
 <script>
   import Container from '../components/Container.vue'
   import { CellBox, Divider, Group, GroupTitle, XButton, Checklist, XAddress, ChinaAddressV4Data } from 'vux'
+  import { mapGetters, mapActions } from 'vuex'
 
   export default {
-    name: 'detail',
+    name: 'step2',
     data () {
       return {
         value: [],
         addressData: ChinaAddressV4Data
       }
     },
+    mounted () {
+      this.value = this.serveCityId
+    },
     methods: {
       next () {
+        this.upServeCityId(this.value)
         this.$router.push('/registered/step3')
       },
       logHide (str) {
         console.log(this.value)
-      }
+      },
+      ...mapActions([
+        'upServeCityId'
+      ])
+    },
+    computed: {
+      ...mapGetters([
+        'serveCityId'
+      ])
     },
     components: {
       Container,
@@ -51,7 +64,7 @@
 </script>
 
 <style lang="less">
-  .order-detail {
+  .step2 {
     .order-cell {
       background-color: #fff;
     }
@@ -66,6 +79,9 @@
 
     .tips {
       line-height: 20px;
+    }
+    .weui-cell {
+      font-size: 14px;
     }
   }
 
