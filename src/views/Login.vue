@@ -42,6 +42,9 @@
     methods: {
       async onLogin () {
         if (this.$refs.username.valid && this.$refs.password.valid) {
+          this.$vux.loading.show({
+            text: 'Loading'
+          })
           const res = await api.login({ username: this.username, password: this.password })
           if (res.code === 20000) {
             this.upToken(res.data.token)
@@ -57,6 +60,7 @@
               content: res.message
             })
           }
+          this.$vux.loading.hide()
         } else {
           this.$vux.alert.show({
             title: '提示',

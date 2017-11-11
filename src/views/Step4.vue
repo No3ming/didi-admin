@@ -69,6 +69,9 @@
     },
     methods: {
       async onSure () {
+        this.$vux.loading.show({
+          text: 'Loading'
+        })
         const serviceList = this.serviceList.join(',')
         const serveCityId = this.serveCityId.join(',')
         const certificateImgs = this.certificateImgs.map((item) => {
@@ -88,6 +91,7 @@
           phone: this.phone,
           password: this.password
         })
+        this.$vux.loading.hide()
         if (res.code === 20000) {
           // this.$router.push('/registered/step4')
           let self = this
@@ -130,6 +134,7 @@
         'workingExperienceImgs',
         'workingExperience',
         'realname',
+        'password',
         'phone',
         'address',
         'serveCityId',
