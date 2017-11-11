@@ -44,6 +44,7 @@
   import VueCoreImageUpload from 'vue-core-image-upload'
   import { CellBox, Divider, XInput, Group, GroupTitle, Grid, GridItem, XButton, Cell, Checklist, XAddress, XTextarea, ChinaAddressV4Data } from 'vux'
   import { mapGetters } from 'vuex'
+  import api from '../api'
 
   export default {
     name: 'detail',
@@ -67,8 +68,42 @@
       })
     },
     methods: {
-      next () {
-        this.$router.push('/registered/step4')
+      async onSure () {
+        const serviceList = this.serviceList.join(',')
+        const serveCityId = this.serveCityId[this.serveCityId.length - 1]
+        const certificateImgs = this.certificateImgs.map((item) => {
+          return item.id
+        }).join(',')
+        const workingExperienceImgs = this.workingExperienceImgs.map((item) => {
+          return item.id
+        }).join(',')
+        const res = await api.registered({
+          serve_type: serviceList,
+          serve_city_id: serveCityId,
+          address: this.address,
+          certificate_imgs: certificateImgs,
+          working_experience_imgs: workingExperienceImgs,
+          working_experience: this.workingExperience,
+          realname: this.realname,
+          phone: this.phone,
+          password: this.password
+        })
+        if (res.code === 20000) {
+          // this.$router.push('/registered/step4')
+          let self = this
+          this.$vux.alert.show({
+            title: '提交成功',
+            content: '我们将在三个工作日内通过微信反馈认证结果，您也可以通过滴滴财务的"个人中心"菜单查询认证进度',
+            onHide () {
+              self.$router.push('/login')
+            }
+          })
+        } else {
+          this.$vux.alert.show({
+            title: '提示',
+            content: res.message
+          })
+        }
       },
       logHide (str) {
         console.log(this.value)
@@ -87,20 +122,6 @@
       },
       miniChanged () {
         console.log(12)
-      },
-      onSure () {
-        let self = this
-        this.$vux.alert.show({
-          title: '提交成功',
-          content: '我们将在三个工作日内通过微信反馈认证结果，您也可以通过滴滴财务的"个人中心"菜单查询认证进度',
-          onShow () {
-            console.log('Plugin: I\'m showing')
-          },
-          onHide () {
-            self.$router.push('/canOrder')
-            console.log('Plugin: I\'m hiding')
-          }
-        })
       }
     },
     computed: {
