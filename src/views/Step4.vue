@@ -70,7 +70,7 @@
     methods: {
       async onSure () {
         const serviceList = this.serviceList.join(',')
-        const serveCityId = this.serveCityId[this.serveCityId.length - 1]
+        const serveCityId = this.serveCityId.join(',')
         const certificateImgs = this.certificateImgs.map((item) => {
           return item.id
         }).join(',')

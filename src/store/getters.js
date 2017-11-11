@@ -3,6 +3,8 @@
  */
 export const direction = state => state.direction
 
+export const token = state => state.token || window.sessionStorage.getItem('token') || ''
+
 export const transitionName = state => state.transitionName
 
 export const serviceList = state => state.serviceList

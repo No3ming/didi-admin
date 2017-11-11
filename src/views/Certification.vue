@@ -2,7 +2,7 @@
   <container class="certification">
     <group title="证件图片">
       <cell-box class="img-box">
-        <div v-show="imgs.length > 0">
+        <div v-show="imgs.length > 0" class="img-box">
           <div v-for="(item, i) in imgs" class="img-item" >
             <img :src="item.url" :key="i" />
             <div class="doing">
@@ -191,6 +191,9 @@
         margin-top: 8px;
         margin-bottom: 8px;
       }
+    }
+    .img-box {
+      flex: 1;
     }
   }
 </style>

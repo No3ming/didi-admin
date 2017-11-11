@@ -3,6 +3,8 @@
  */
 export const UPDATE_DIRECTION = (state, direction) => { state.direction = direction }
 
+export const UPDATE_TOKEN = (state, token) => { state.token = token }
+
 export const UPDATE_SERVICE_LIST = (state, serviceList) => { state.serviceList = serviceList }
 
 export const UPDATE_ADDRESS = (state, address) => { state.address = address }

@@ -5,28 +5,10 @@
  * wrap fetch function
  */
 import axios from 'axios'
-import md5 from 'blueimp-md5'
 import store from '../store'
-import queryString2Object from '../utils/query-string-2-object'
+console.log(store.getters.token)
 
-// 公共参数
-let authorization = window.sessionStorage.getItem('authorization')
-if (!authorization) {
-  let v = '1.0'
-  let timestamp = +new Date()
-  let queryObj = queryString2Object()
-  let sign = md5(queryObj.store_id, queryObj.token, timestamp, v)
-
-  authorization = {
-    token: queryObj.token,
-    timestamp: timestamp,
-    sign,
-    v
-  }
-  window.sessionStorage.setItem('authorization', JSON.stringify(authorization))
-}
-
-let token = window.sessionStorage.getItem('token') || ''
+let token = store.getters.token || window.sessionStorage.getItem('token') || ''
 // 设置请求公共参数
 axios.defaults.timeout = 10000
 axios.defaults.baseURL = '/api'

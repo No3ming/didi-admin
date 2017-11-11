@@ -4,8 +4,8 @@
       <p class="center"><img :src="url"></p>
     </blur>
     <group label-width="3em" label-margin-right="2em" label-align="right">
-      <x-input title="手机" placeholder="您注册时的手机号码" v-model="number"></x-input>
-      <x-input title="密码" placeholder="您注册时使用的密码" v-model="passWord"></x-input>
+      <x-input title="手机" placeholder="您注册时的手机号码" ref="username" required is-type="china-mobile" v-model="username"></x-input>
+      <x-input title="密码" placeholder="您注册时使用的密码" ref="password" required v-model="password"></x-input>
     </group>
     <group>
       <cell-box>
@@ -13,40 +13,60 @@
       </cell-box>
     </group>
     <flexbox class="link-to">
-      <flexbox-item class="link-box"><router-link to="/registered/step1" class="link">注册和通过平台认证</router-link></flexbox-item>
-      <flexbox-item class="link-box"><router-link to="/forget" class="link">忘记手机号码</router-link></flexbox-item>
+      <flexbox-item class="link-box">
+        <router-link to="/registered/step1" class="link">注册和通过平台认证</router-link>
+      </flexbox-item>
+      <flexbox-item class="link-box">
+        <router-link to="/forget" class="link">忘记手机号码</router-link>
+      </flexbox-item>
     </flexbox>
   </container>
 </template>
 
 <script>
   import Container from '../components/Container.vue'
-  import { Blur, Group, Cell, XInput, XButton, CellBox, Flexbox, FlexboxItem } from 'vux'
+  import {Blur, Group, Cell, XInput, XButton, CellBox, Flexbox, FlexboxItem} from 'vux'
   import defaultImg from '@/assets/header.jpg'
+  import api from '../api'
+  import { mapActions } from 'vuex'
 
   export default {
     name: 'login',
     data () {
       return {
         url: defaultImg,
-        number: '',
-        passWord: ''
+        username: '',
+        password: ''
       }
     },
     methods: {
-      onLogin () {
-        let self = this
-        this.$vux.alert.show({
-          title: '登陆成功',
-          onShow () {
-            console.log('Plugin: I\'m showing')
-          },
-          onHide () {
-            self.$router.push('/canOrder')
-            console.log('Plugin: I\'m hiding')
+      async onLogin () {
+        if (this.$refs.username.valid && this.$refs.password.valid) {
+          const res = await api.login({ username: this.username, password: this.password })
+          if (res.code === 20000) {
+            this.upToken(res.data.token)
+            this.$vux.alert.show({
+              title: '登陆成功',
+              onHide () {
+                window.location.replace('/')
+              }
+            })
+          } else {
+            this.$vux.alert.show({
+              title: '提示',
+              content: res.message
+            })
           }
-        })
-      }
+        } else {
+          this.$vux.alert.show({
+            title: '提示',
+            content: '输入不正确'
+          })
+        }
+      },
+      ...mapActions([
+        'upToken'
+      ])
     },
     components: {
       Container,

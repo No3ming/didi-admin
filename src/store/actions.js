@@ -6,6 +6,11 @@ export const showLoading = ({ commit }) => {
   commit('UPDATE_LOADING', { status: true })
 }
 
+export const upToken = ({ commit }, token) => {
+  commit('UPDATE_TOKEN', token)
+  window.sessionStorage.setItem('token', token)
+}
+
 export const upServiceList = ({ commit }, serviceList) => {
   commit('UPDATE_SERVICE_LIST', serviceList)
 }

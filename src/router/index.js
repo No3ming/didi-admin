@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import store from '../store'
 
 import NavBar from '../components/NavBar.vue'
 
@@ -108,6 +109,40 @@ const routes = [
 const router = new Router({
   mode: 'history',
   routes
+})
+
+router.beforeEach((to, from, next) => {
+  let flag
+  switch (to.path) {
+    case '/login':
+    case '/':
+    case '/registered/step1':
+    case '/registered/step2':
+    case '/registered/step3':
+    case '/registered/step4':
+    case '/registered/certification':
+    case '/forget':
+      flag = true
+      break
+    default:
+      flag = false
+      break
+  }
+  if (!store.getters.token && !flag) {
+    next({ path: '/login' })
+  } else if (!store.getters.token && flag) {
+    if (to.path === '/') {
+      next({path: '/login'})
+    } else {
+      next()
+    }
+  } else {
+    if (to.path === '/') {
+      next({path: '/canOrder'})
+    } else {
+      next()
+    }
+  }
 })
 
 router.afterEach(to => {

@@ -3,6 +3,7 @@
  */
 export default {
   transitionName: 'fade',
+  token: '',
   serviceList: [],
   serveCityId: [],
   address: '',

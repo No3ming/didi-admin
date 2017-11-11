@@ -8,7 +8,7 @@ const api = {
     return service.post('/accountant/register', payload)
   },
   login (payload) {
-    return service.post('accountant/login', payload)
+    return service.post('/accountant/login', payload)
   }
 }
 
