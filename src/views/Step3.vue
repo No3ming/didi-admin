@@ -183,7 +183,7 @@
     },
     computed: {
       isNext () {
-        return !(this.realname1 && this.phone1 && this.address1 && this.workingExperience1 && this.certificateImgs && this.workingExperienceImgs1 && this.password1 && this.password2 && this.password1 === this.password2)
+        return !(this.realname1 && this.phone1 && this.address1 && this.workingExperience1 && this.certificateImgs && this.password1 && this.password2 && this.password1 === this.password2)
       },
       ...mapGetters([
         'certificateImgs',
