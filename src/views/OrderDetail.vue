@@ -45,7 +45,7 @@
           <x-button plain type="primary" :link="'/order-detail-step?id=' + order.id">完成进度：<span v-html="order.status"></span></x-button>
         </cell-box>
         <cell-box>
-          <x-button type="primary">完成订单</x-button>
+          <x-button type="primary" @click.native="onCompleted">完成订单</x-button>
         </cell-box>
       </group>
     </div>
@@ -80,7 +80,7 @@
     methods: {
       async onPay () {
         if (this.order.rob_depost === 0) {
-          const res = await api.robOrdering()
+          const res = await api.robing()
           if (res.code === 20000) {
             let self = this
             this.$vux.alert.show({
@@ -104,6 +104,24 @@
             onHide () {
               self.$router.replace('/canOrder')
             }
+          })
+        }
+      },
+      async onCompleted () {
+        const res = await api.robOrdering()
+        if (res.code === 20000) {
+          let self = this
+          this.$vux.alert.show({
+            title: '提示',
+            content: '！',
+            onHide () {
+              self.$router.replace('/progress')
+            }
+          })
+        } else {
+          this.$vux.alert.show({
+            title: '提示',
+            content: res.message
           })
         }
       },
