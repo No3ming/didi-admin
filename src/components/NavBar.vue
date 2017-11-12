@@ -5,13 +5,16 @@
       <p class="nav-bar-label">可抢的订单</p>
     </router-link>
     <router-link class="nav-bar-item" to="/progress">
-      <i class="icon-progress"></i>
+       <span class="badge-box">
+        <badge :text="progressTotal" v-show="progressTotal > 0" class="badge"></badge>
+        <i class="icon-progress"></i>
+       </span>
       <p class="nav-bar-label">进行中的订单</p>
     </router-link>
     <router-link class="nav-bar-item" to="/completed">
       <span class="badge-box">
         <i class="icon-wancheng"></i>
-        <badge text="88" class="badge"></badge>
+        <badge :text="completedTotal" v-show="completedTotal > 0" class="badge"></badge>
       </span>
       <p class="nav-bar-label">完成的订单</p>
     </router-link>
@@ -20,9 +23,16 @@
 
 <script>
   import { Badge } from 'vux'
+  import { mapGetters } from 'vuex'
 
   export default {
     name: 'nav-bar',
+    computed: {
+      ...mapGetters([
+        'progressTotal',
+        'completedTotal'
+      ])
+    },
     components: {
       Badge
     }

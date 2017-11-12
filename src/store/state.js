@@ -12,5 +12,8 @@ export default {
   workingExperience: '',
   realname: '',
   phone: '',
-  password: ''
+  password: '',
+  nowOrder: null,
+  progressTotal: 0,
+  completedTotal: 0
 }

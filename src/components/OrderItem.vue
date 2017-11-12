@@ -1,21 +1,16 @@
 <template>
   <grid class="order-item">
     <grid-item class="header-item">
-      <span class="grid-center" v-html="order.name"></span>
+      <span class="grid-center" v-html="order.contacts"></span>
     </grid-item>
     <grid-item  class="header-item">
-      <span class="grid-center" v-html="order.type"></span>
+      <span class="grid-center" v-html="order.serve_type"></span>
     </grid-item>
     <grid-item  class="header-item">
-      <span class="grid-center" v-html="order.price"></span>
+      <span class="grid-center" v-html="order.commission_amount"></span>
     </grid-item>
     <grid-item  class="header-item">
-      <router-link v-if="order.status === 0" class="grid-center success" :to="'/order/detail?id=' + order.id" >可以抢单</router-link>
-      <router-link v-else="order.status === 1" class="grid-center success" :to="'/order/detail?id=' + order.id" v-html="order.progress"></router-link>
-      <router-link v-if="order.status === 3" class="grid-center success" :to="'/order/detail?id=' + order.id" >不结算</router-link>
-      <router-link v-if="order.status === 4" class="grid-center success" :to="'/order/detail?id=' + order.id" >待结算</router-link>
-      <router-link v-if="order.status === 5" class="grid-center success" :to="'/order/detail?id=' + order.id" >已结算</router-link>
-
+      <router-link class="grid-center success" :to="'/order/detail?id=' + order.id" v-html="order.company"></router-link>
     </grid-item>
   </grid>
 </template>

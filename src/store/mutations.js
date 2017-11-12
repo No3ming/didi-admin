@@ -22,3 +22,9 @@ export const UPDATE_REAL_NAME = (state, realname) => { state.realname = realname
 export const UPDATE_PHONE = (state, phone) => { state.phone = phone }
 
 export const UPDATE_PASSWORD = (state, password) => { state.password = password }
+
+export const UPDATE_NOW_ORDER = (state, nowOrder) => { state.nowOrder = nowOrder }
+
+export const UPDATE_PROGRESS_TOTAL = (state, progressTotal) => { state.progressTotal = progressTotal }
+
+export const UPDATE_COMPLETE_TOTAL = (state, completedTotal) => { state.completedTotal = completedTotal }

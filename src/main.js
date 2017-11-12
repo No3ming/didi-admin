@@ -7,9 +7,10 @@ import App from './App'
 import store from './store'
 import router from './router'
 import api from './api'
-import { LoadingPlugin, AlertPlugin } from 'vux'
+import { LoadingPlugin, AlertPlugin, ToastPlugin } from 'vux'
 Vue.use(LoadingPlugin)
 Vue.use(AlertPlugin)
+Vue.use(ToastPlugin)
 
 Vue.use(VueRouter)
 Vue.prototype.$api = api

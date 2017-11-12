@@ -28,6 +28,7 @@
 <style lang="less">
   @import '~vux/src/styles/reset.less';
   @import './styles/color-theme.less';
+  @import './styles/order-item.less';
 
   .app,
   .transition {

@@ -24,3 +24,9 @@ export const realname = state => state.realname
 export const phone = state => state.phone
 
 export const password = state => state.password
+
+export const nowOrder = state => state.nowOrder
+
+export const progressTotal = state => state.progressTotal
+
+export const completedTotal = state => state.completedTotal
