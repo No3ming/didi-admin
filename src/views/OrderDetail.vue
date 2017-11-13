@@ -45,7 +45,7 @@
           <x-button plain type="primary" :link="'/order-detail-step?id=' + order.id">完成进度：<span v-html="order.status"></span></x-button>
         </cell-box>
         <cell-box>
-          <x-button type="primary" @click.native="onCompleted">完成订单</x-button>
+          <x-button type="primary" @click.native="isShow = true">完成订单</x-button>
         </cell-box>
       </group>
     </div>
@@ -56,13 +56,42 @@
         </cell-box>
       </group>
     </div>
+    <div class="text-box" v-show="isShow">
+      <div class="text-header">
+        <x-button type="primary" mini @click.native="isShow = false">取消</x-button>
+        <x-button type="primary" mini @click.native="onCompleted(false)">提交</x-button>
+      </div>
+      <group class="text-container">
+        <x-textarea ref="textarea" required :rows="10" :max="1000" :placeholder="'备注，审核资料'" v-model="mark"></x-textarea>
+      </group>
+      <grid class="clearfix">
+        <grid-item class="xiangji-box">
+          <vue-core-image-upload
+            :crop="false"
+            class="xiangji"
+            :data="uploadData"
+            inputOfFile="file"
+            @imageuploaded="miniUploaded"
+            @imagechanged="miniChanged"
+            url="/api/upload">
+            <img :src="xiangJi" class="icon-upload">
+          </vue-core-image-upload>
+        </grid-item>
+        <grid-item class="miniImg-box">
+          <span class="miniImg" v-show="markImgs.length === 0">无</span>
+          <img v-for="(item, i) in markImgs" :src="item.url" alt="缩略图" class="miniImg"/>
+        </grid-item>
+      </grid>
+    </div>
   </container>
 </template>
 
 <script>
   import Container from '../components/Container.vue'
-  import { CellBox, Divider, Group, GroupTitle, XButton } from 'vux'
+  import { CellBox, Divider, Group, GroupTitle, Grid, GridItem, XButton, XTextarea } from 'vux'
+  import VueCoreImageUpload from 'vue-core-image-upload'
   import { mapGetters } from 'vuex'
+  import xiangJi from '@/assets/xiangji.png'
   import api from '../api'
 
   export default {
@@ -70,7 +99,14 @@
     data () {
       return {
         status: null,
-        order: {}
+        order: {},
+        isShow: false,
+        uploadData: {
+          type: 3
+        },
+        xiangJi: xiangJi,
+        mark: '',
+        markImgs: []
       }
     },
     async mounted () {
@@ -127,6 +163,22 @@
       },
       onFinished () {
         this.$router.replace('/completed')
+      },
+      miniUploaded (res) {
+        this.$vux.loading.hide()
+        if (res.code === 20000) {
+          this.markImgs = this.markImgs.concat(res.data)
+        } else {
+          this.$vux.alert.show({
+            title: '提示',
+            content: res.message
+          })
+        }
+      },
+      miniChanged () {
+        this.$vux.loading.show({
+          text: 'Loading'
+        })
       }
     },
     computed: {
@@ -140,7 +192,11 @@
       Divider,
       Group,
       GroupTitle,
-      XButton
+      XButton,
+      XTextarea,
+      Grid,
+      GridItem,
+      VueCoreImageUpload
     }
   }
 </script>
@@ -161,6 +217,74 @@
 
     .tips {
       line-height: 20px;
+    }
+
+    .text-box {
+      position: fixed;
+      left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #fff;
+    }
+
+    .text-header {
+      line-height: 20px;
+      text-align: right;
+      padding: 10px;
+    }
+
+    .text-container {
+      .weui-cells {
+        margin-top: 0;
+      }
+    }
+
+    .xiangji-box {
+      padding: 5px;
+      border: 0;
+    }
+
+    .xiangji {
+      width: 50px;
+      height: 30px;
+      padding: 5px;
+    }
+
+    .icon-upload {
+      height: 100%;
+    }
+
+    .miniImg-box {
+      height: 50px;
+      padding: 10px 5px;
+      text-align: right;
+      background-color: #fff;
+    }
+
+    .miniImg {
+      display: inline-block;
+      height: 30px;
+      width: 30px;
+      color: #000;
+      line-height: 30px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      overflow: hidden;
+      font-size: 10px;
+      text-align: center;
+    }
+
+    .img-item {
+      width: 20px;
+      height: 20px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      margin: 1px;
+    }
+
+    .weui-cell__bd {
+      font-size: 14px;
     }
   }
 
