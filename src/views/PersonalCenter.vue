@@ -11,7 +11,7 @@
 
 <script>
   import Container from '../components/Container.vue'
-  import { CellBox, Divider, Group, GroupTitle, XButton } from 'vux'
+  import { CellBox, Divider, Group, GroupTitle, XButton, Cell } from 'vux'
 
   export default {
     name: 'detail',
@@ -36,7 +36,8 @@
       Divider,
       Group,
       GroupTitle,
-      XButton
+      XButton,
+      Cell
     }
   }
 </script>

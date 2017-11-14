@@ -16,6 +16,7 @@ import Step3 from '../views/Step3.vue'
 import Step4 from '../views/Step4.vue'
 import Certification from '../views/Certification.vue'
 import Amount from '../views/Amount.vue'
+import PersonalCenter from '../views/PersonalCenter.vue'
 import Forget from '../views/Forget.vue'
 
 import NotFound from '../views/NotFound.vue'
@@ -99,6 +100,11 @@ const routes = [
     path: '/personal/amount/:id',
     name: 'amount',
     component: Amount
+  },
+  {
+    path: '/personal',
+    name: 'personal',
+    component: PersonalCenter
   },
   {
     path: '*',
