@@ -42,6 +42,21 @@ const api = {
   // 不需保证金抢订单
   robing (payload) {
     return service.post('/accountant/robing', payload)
+  },
+  getCenter (payload) {
+    return service.post('/accountant/center', payload)
+  },
+  getInfo (payload) {
+    return service.post('/accountant/info', payload)
+  },
+  getWithdrawList (payload) {
+    return service.post('/accountant/withdrawList', payload)
+  },
+  getWithdraw (payload) {
+    return service.post('/accountant/withdraw', payload)
+  },
+  getFrozenList (payload) {
+    return service.post('/accountant/frozenList', payload)
   }
 }
 

@@ -17,6 +17,7 @@ import Step4 from '../views/Step4.vue'
 import Certification from '../views/Certification.vue'
 import Amount from '../views/Amount.vue'
 import PersonalCenter from '../views/PersonalCenter.vue'
+import MyInfo from '../views/MyInfo.vue'
 import Forget from '../views/Forget.vue'
 
 import NotFound from '../views/NotFound.vue'
@@ -107,6 +108,11 @@ const routes = [
     component: PersonalCenter
   },
   {
+    path: '/personal/my-info',
+    name: 'myInfo',
+    component: MyInfo
+  },
+  {
     path: '*',
     component: NotFound
   }
@@ -153,6 +159,8 @@ router.beforeEach((to, from, next) => {
 
 router.afterEach(to => {
   switch (to.path) {
+    case '/':
+    case '/login':
     case '/canOrder':
       document.title = '我要接单'
       break
