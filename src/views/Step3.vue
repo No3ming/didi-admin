@@ -14,7 +14,7 @@
         </div>
       </cell>
       <cell title="我的从业经历" inline-desc="(用于评估经验)" value-align="right"
-            @click.native="textStatus(true)">
+            @click.native="isShow = true">
         <span v-show="workingExperienceImgs1.length === 0">编辑</span>
         <div v-show="workingExperienceImgs1.length > 0">
           <img v-for="(item, i) in workingExperienceImgs1" :src="item.url" :key="i" class="img-item"/>
@@ -31,7 +31,8 @@
     </group>
     <div class="text-box" v-show="isShow">
       <div class="text-header">
-        <x-button type="primary" mini @click.native="textStatus(false)">保存</x-button>
+        <x-button type="取消" class="pull-left cancel" mini @click.native="cancel">取消</x-button>
+        <x-button type="primary" class="pull-right" mini @click.native="textStatus(false)">保存</x-button>
       </div>
       <group class="text-container">
         <x-textarea ref="textarea" required :rows="10" :max="500" :placeholder="'我的经历'" @on-focus="onEvent('focus')"
@@ -138,11 +139,15 @@
       logHide (str) {
         console.log(this.value)
       },
+      cancel () {
+        this.isShow = false
+        this.workingExperienceImgs1 = []
+        this.workingExperience1 = ''
+        this.upWorkingExperienceImgs([])
+        this.upWorkingExperience('')
+      },
       textStatus (status) {
-        this.isShow = status
-        if (status) {
-          this.$refs.textarea.focus()
-        }
+        this.isShow = false
         this.upWorkingExperienceImgs(this.workingExperienceImgs1)
         this.upWorkingExperience(this.workingExperience1)
       },
@@ -259,6 +264,7 @@
       line-height: 20px;
       text-align: right;
       padding: 10px;
+      overflow: hidden;
     }
 
     .text-container {
@@ -312,6 +318,15 @@
 
     .weui-cell__bd {
       font-size: 14px;
+    }
+    .pull-left {
+      float: left;
+    }
+    .pull-right {
+      float: right;
+    }
+    .cancel {
+      margin-top: 15px;
     }
   }
 

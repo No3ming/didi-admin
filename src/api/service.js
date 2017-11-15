@@ -6,9 +6,9 @@
  */
 import axios from 'axios'
 import store from '../store'
-console.log(store.getters.token)
+import getCookie from '../utils/getCookie'
 
-let token = store.getters.token || window.sessionStorage.getItem('token') || ''
+let token = store.getters.token || getCookie('token') || ''
 // 设置请求公共参数
 axios.defaults.timeout = 10000
 axios.defaults.baseURL = '/api'

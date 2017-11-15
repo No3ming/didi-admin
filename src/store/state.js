@@ -15,5 +15,6 @@ export default {
   password: '',
   nowOrder: null,
   progressTotal: 0,
-  completedTotal: 0
+  completedTotal: 0,
+  isCenter: false
 }

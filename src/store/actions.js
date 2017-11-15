@@ -1,13 +1,15 @@
 /**
  * Created by ldm on 2017/11/1.
  */
+import setCookie from '../utils/setCookie'
+
 export const showLoading = ({ commit }) => {
   commit('UPDATE_LOADING', { status: true })
 }
 
 export const upToken = ({ commit }, token) => {
-  commit('UPDATE_TOKEN', token)
-  window.sessionStorage.setItem('token', token)
+  // commit('UPDATE_TOKEN', token)
+  setCookie('token', token, 50)
 }
 
 export const upServiceList = ({ commit }, serviceList) => {
@@ -56,4 +58,9 @@ export const upProgressTotal = ({ commit }, progressTotal) => {
 
 export const upCompletedTotal = ({ commit }, completedTotal) => {
   commit('UPDATE_COMPLETE_TOTAL', completedTotal)
+}
+
+export const upIsCenter = ({ commit }, isCenter) => {
+  commit('UPDATE_IS_CENTER', isCenter)
+  window.sessionStorage.setItem('isCenter', isCenter)
 }

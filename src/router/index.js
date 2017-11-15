@@ -98,7 +98,7 @@ const routes = [
     component: Forget
   },
   {
-    path: '/personal/amount/:id',
+    path: '/amount/:id',
     name: 'amount',
     component: Amount
   },
@@ -126,17 +126,23 @@ const router = new Router({
 router.beforeEach((to, from, next) => {
   let flag
   switch (to.path) {
-    case '/login':
-    case '/':
     case '/registered/step1':
     case '/registered/step2':
     case '/registered/step3':
     case '/registered/step4':
     case '/registered/certification':
     case '/forget':
+    case '/login':
+    case '/':
+    case '':
       flag = true
       break
+    case '/personal':
+    case '/personal/my-info':
+      store.dispatch('upIsCenter', true)
+      break
     default:
+      store.dispatch('upIsCenter', false)
       flag = false
       break
   }
@@ -178,6 +184,9 @@ router.afterEach(to => {
     case '/registered/step3':
     case '/registered/certification':
       document.title = '进行认证'
+      break
+    case '/personal':
+      document.title = '个人中心'
       break
     case '/not-found':
       document.title = '404'

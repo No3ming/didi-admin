@@ -28,7 +28,7 @@
   import {Blur, Group, Cell, XInput, XButton, CellBox, Flexbox, FlexboxItem} from 'vux'
   import defaultImg from '@/assets/header.jpg'
   import api from '../api'
-  import { mapActions } from 'vuex'
+  import { mapActions, mapGetters } from 'vuex'
 
   export default {
     name: 'login',
@@ -48,10 +48,16 @@
           const res = await api.login({ username: this.username, password: this.password })
           if (res.code === 20000) {
             this.upToken(res.data.token)
+            let self = this
             this.$vux.alert.show({
               title: '登陆成功',
               onHide () {
-                window.location.replace('/')
+                if (self.isCenter === 'true' || self.isCenter === true) {
+                  console.log(1111)
+                  window.location.replace('/personal')
+                } else {
+                  window.location.replace('/canOrder')
+                }
               }
             })
           } else {
@@ -70,6 +76,11 @@
       },
       ...mapActions([
         'upToken'
+      ])
+    },
+    computed: {
+      ...mapGetters([
+        'isCenter'
       ])
     },
     components: {
