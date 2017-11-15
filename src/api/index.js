@@ -22,7 +22,7 @@ const api = {
   },
   // 完成的订单
   getComplete (payload) {
-    return service.post('/accountant/complete', payload)
+    return service.post('/accountant/completeList', payload)
   },
   // 抢单<到这个页面要请求一次,返回是否需要支付或要支付多少保证金>
   getRobOrdering (payload) {
