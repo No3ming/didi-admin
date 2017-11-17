@@ -29,6 +29,7 @@
   import defaultImg from '@/assets/header.jpg'
   import api from '../api'
   import { mapActions, mapGetters } from 'vuex'
+  // import axios from 'axios'
 
   export default {
     name: 'login',
