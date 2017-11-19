@@ -7,15 +7,9 @@ export const showLoading = ({ commit }) => {
   commit('UPDATE_LOADING', { status: true })
 }
 
-<<<<<<< HEAD
 export const upToken = ({ commit }, token, time) => {
   commit('UPDATE_TOKEN', token)
   setCookie('accountant-token', token, time || 50)
-=======
-export const upToken = ({ commit }, token) => {
-  // commit('UPDATE_TOKEN', token)
-  setCookie('token', token, 50)
->>>>>>> 5459b910accb934bf5f21283325757fc4ac5b62e
 }
 
 export const upServiceList = ({ commit }, serviceList) => {

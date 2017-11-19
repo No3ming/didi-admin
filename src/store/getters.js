@@ -5,11 +5,7 @@ import getCookie from '../utils/getCookie'
 
 export const direction = state => state.direction
 
-<<<<<<< HEAD
 export const token = state => state.token || getCookie('accountant-token') || ''
-=======
-export const token = state => getCookie('token') || ''
->>>>>>> 5459b910accb934bf5f21283325757fc4ac5b62e
 
 export const transitionName = state => state.transitionName
 

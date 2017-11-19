@@ -32,8 +32,6 @@
 
   import { mapActions, mapGetters } from 'vuex'
 
-
-
   export default {
     name: 'login',
     data () {
