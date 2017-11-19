@@ -14,10 +14,10 @@
     </group>
     <flexbox class="link-to">
       <flexbox-item class="link-box">
-        <router-link to="/registered/step1" class="link">注册和通过平台认证</router-link>
+        <a @click="onRegister" class="link">注册和通过平台认证</a>
       </flexbox-item>
       <flexbox-item class="link-box">
-        <router-link to="/forget" class="link">忘记手机号码</router-link>
+        <a class="link" @click="linkService">忘记手机号码</a>
       </flexbox-item>
     </flexbox>
   </container>
@@ -29,6 +29,7 @@
   import defaultImg from '@/assets/header.jpg'
   import api from '../api'
   import { mapActions } from 'vuex'
+  import axios from 'axios'
 
   export default {
     name: 'login',
@@ -48,10 +49,19 @@
           const res = await api.login({ username: this.username, password: this.password })
           if (res.code === 20000) {
             this.upToken(res.data.token)
+            let self = this
+            let path = this.$route.query['path'] || 'order'
             this.$vux.alert.show({
               title: '登陆成功',
               onHide () {
-                window.location.replace('/')
+                axios.defaults.params = {token: res.data.token}
+                self.upIsLogin(true)
+                self.upIsCenter(window.sessionStorage.getItem('accountant-isCenter') === 'true')
+                if (path === 'center') {
+                  self.$router.replace('/accountant/personal')
+                } else {
+                  self.$router.replace('/accountant/waitOrder')
+                }
               }
             })
           } else {
@@ -67,6 +77,16 @@
             content: '输入不正确'
           })
         }
+      },
+      linkService () {
+        this.$vux.alert.show({
+          title: '联系客服',
+          content: '电话： 12312313<br/>'
+        })
+      },
+      onRegister () {
+        this.upToken('', 0)
+        this.$router.push('/accountant/step1')
       },
       ...mapActions([
         'upToken'

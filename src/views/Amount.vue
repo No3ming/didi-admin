@@ -67,7 +67,12 @@
       } else {
         this.$vux.alert.show({
           title: '提示',
-          content: res.message
+          content: res.message,
+          onHide () {
+            if (res.code === 402 || res.code === 405) {
+              self.$router.replace('/accountant/login?path=order')
+            }
+          }
         })
       }
     },

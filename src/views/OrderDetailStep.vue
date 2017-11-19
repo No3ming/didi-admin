@@ -44,8 +44,8 @@
           title: '提示',
           content: res.message,
           onHide () {
-            if (res.code === 402) {
-              self.$router.replace('/login')
+            if (res.code === 402 || res.code === 405) {
+              self.$router.replace('/accountant/login?path=order')
             }
           }
         })
@@ -53,7 +53,7 @@
     },
     methods: {
       next () {
-        this.$router.push('/registered/step2')
+        this.$router.push('/accountant/step2')
       },
       change01 (str) {
         console.log(str)
@@ -62,15 +62,15 @@
         if (this.checklist.length > 0) {
           const res = await api.postProgress({order_id: this.id, type: this.checklist.join(',')})
           if (res.code === 20000) {
-            this.$router.replace('/progress')
+            this.$router.replace('/accountant/progress')
           } else {
             let self = this
             this.$vux.alert.show({
               title: '提示',
               content: res.message,
               onHide () {
-                if (res.code === 402) {
-                  self.$router.replace('/login')
+                if (res.code === 402 || res.code === 405) {
+                  self.$router.replace('/accountant/login?path=order')
                 }
               }
             })

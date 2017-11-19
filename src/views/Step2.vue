@@ -36,7 +36,7 @@
     methods: {
       next () {
         this.upServeCityId(this.value)
-        this.$router.push('/registered/step3')
+        this.$router.push('/accountant/step3')
       },
       logHide (str) {
         console.log(this.value)

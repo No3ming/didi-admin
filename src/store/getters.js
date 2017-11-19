@@ -1,9 +1,11 @@
 /**
  * Created by ldm on 2017/11/1.
  */
+import getCookie from '../utils/getCookie'
+
 export const direction = state => state.direction
 
-export const token = state => state.token || window.sessionStorage.getItem('token') || ''
+export const token = state => state.token || getCookie('accountant-token') || ''
 
 export const transitionName = state => state.transitionName
 

@@ -43,7 +43,7 @@
     methods: {
       onDetail (order) {
         this.upNowOrder(order)
-        this.$router.push('/order/detail?status=2')
+        this.$router.push('/accountant/order/detail?status=2')
       },
       ...mapActions([
         'upNowOrder',
@@ -65,8 +65,8 @@
           title: '提示',
           content: res.message,
           onHide () {
-            if (res.code === 402) {
-              self.$router.replace('/login')
+            if (res.code === 402 || res.code === 405) {
+              self.$router.replace('/accountant/login?path=order')
             }
           }
         })

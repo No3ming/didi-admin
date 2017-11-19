@@ -31,7 +31,7 @@
     methods: {
       next () {
         this.upServiceList(this.checks)
-        this.$router.push('/registered/step2')
+        this.$router.push('/accountant/step2')
       },
       change01 (str) {
         console.log(str)

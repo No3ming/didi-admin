@@ -26,7 +26,7 @@ Vue.use(Router)
 
 const routes = [
   {
-    path: '/canOrder',
+    path: '/accountant/canOrder',
     name: ' 我要接单',
     components: {
       default: CanOrder,
@@ -34,81 +34,81 @@ const routes = [
     }
   },
   {
-    path: '/progress',
+    path: '/accountant/progress',
     components: {
       default: Progress,
       nav: NavBar
     }
   },
   {
-    path: '/completed',
+    path: '/accountant/completed',
     components: {
       default: Completed,
       nav: NavBar
     }
   },
   {
-    path: '/order/detail',
+    path: '/accountant/order/detail',
     name: 'detail',
     component: OrderDetail
   },
   {
-    path: '/order-detail-step',
+    path: '/accountant/order-detail-step',
     name: 'orderDetailStep',
     component: OrderDetailStep
   },
   {
-    path: '/',
+    path: '/accountant',
     name: 'login',
     component: Login
   },
   {
-    path: '/login',
+    path: '/accountant/login',
     name: 'login',
     component: Login
   },
   {
-    path: '/registered/step1',
+    path: '/accountant/step1',
     name: 'step1',
     component: Step1
   },
   {
-    path: '/registered/step2',
+    path: '/accountant/step2',
     name: 'step2',
     component: Step2
   },
   {
-    path: '/registered/step3',
+    path: '/accountant/step3',
     name: 'step3',
     component: Step3
   },
   {
-    path: '/registered/step4',
+    path: '/accountant/step4',
     name: 'step4',
     component: Step4
   },
   {
-    path: '/registered/certification',
+    path: '/accountant/certification',
     name: 'certification',
     component: Certification
   },
   {
-    path: '/forget',
+    path: '/accountant/forget',
     name: 'forget',
     component: Forget
   },
   {
-    path: '/personal/amount/:id',
+    path: '/accountant/personal/amount/:id',
     name: 'amount',
     component: Amount
   },
   {
-    path: '/personal',
+    path: '/accountant/personal',
     name: 'personal',
     component: PersonalCenter
   },
   {
-    path: '/personal/my-info',
+    path: '/accountant/personal/my-info',
     name: 'myInfo',
     component: MyInfo
   },
@@ -124,16 +124,17 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
+  let path = to.query['path'] || 'order'
   let flag
   switch (to.path) {
-    case '/login':
-    case '/':
-    case '/registered/step1':
-    case '/registered/step2':
-    case '/registered/step3':
-    case '/registered/step4':
-    case '/registered/certification':
-    case '/forget':
+    case '/accountant/login':
+    case '/accountant/':
+    case '/accountant/step1':
+    case '/accountant/step2':
+    case '/accountant/step3':
+    case '/accountant/step4':
+    case '/accountant/certification':
+    case '/accountant/forget':
       flag = true
       break
     default:
@@ -141,16 +142,18 @@ router.beforeEach((to, from, next) => {
       break
   }
   if (!store.getters.token && !flag) {
-    next({ path: '/login' })
+    next({ path: '/accountant/login' })
   } else if (!store.getters.token && flag) {
     if (to.path === '/') {
-      next({path: '/login'})
+      next({path: '/accountant/login'})
     } else {
       next()
     }
   } else {
-    if (to.path === '/') {
-      next({path: '/canOrder'})
+    if ((to.path === '/accountant/' || to.path === '/accountant') && path !== 'center') {
+      next({path: '/user/waitOrder'})
+    } else if ((to.path === '/accountant/' || to.path === '/accountant') && path === 'center') {
+      next({path: '/accountant/personal'})
     } else {
       next()
     }
@@ -159,24 +162,24 @@ router.beforeEach((to, from, next) => {
 
 router.afterEach(to => {
   switch (to.path) {
-    case '/':
-    case '/login':
-    case '/canOrder':
+    case '/accountant/':
+    case '/accountant/login':
+    case '/accountant/canOrder':
       document.title = '我要接单'
       break
-    case '/progress':
+    case '/accountant/progress':
       document.title = '进行中的订单'
       break
-    case '/completed':
+    case '/accountant/completed':
       document.title = '完成的订单'
       break
-    case '/order/detail':
+    case '/accountant/order/detail':
       document.title = '订单详情'
       break
-    case '/registered/step1':
-    case '/registered/step2':
-    case '/registered/step3':
-    case '/registered/certification':
+    case '/accountant/step1':
+    case '/accountant/step2':
+    case '/accountant/step3':
+    case '/accountant/certification':
       document.title = '进行认证'
       break
     case '/not-found':

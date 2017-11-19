@@ -7,7 +7,7 @@
                placeholder="编辑"></x-input>
       <x-input required ref="address" title="我的地址<br/><span class='label-2'>(用于快递票据)</span>" @on-change="onAddress" text-align="right" v-model="address1"
                placeholder="编辑"></x-input>
-      <cell title="我的证件图片" inline-desc="(用于资质认证)" value-align="right" link="/registered/certification">
+      <cell title="我的证件图片" inline-desc="(用于资质认证)" value-align="right" link="/accountant/certification">
         <span v-show="certificateImgs.length === 0">编辑</span>
         <div v-show="certificateImgs.length > 0">
           <img v-for="(item, i) in certificateImgs" :src="item.url" :key="i" class="img-item"/>
@@ -127,7 +127,7 @@
       },
       next () {
         if (this.$refs.realname.valid && this.$refs.phone.valid && this.$refs.password1.valid && this.$refs.password2.valid && this.$refs.address.valid) {
-          this.$router.push('/registered/step4')
+          this.$router.push('/accountant/step4')
         } else {
           this.$vux.alert.show({
             title: '提示',

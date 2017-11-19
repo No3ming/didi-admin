@@ -42,10 +42,10 @@
     <div v-if="status === 2">
       <group>
         <cell-box>
-          <x-button plain type="primary" :link="'/order-detail-step?id=' + order.id">完成进度：<span v-html="order.status"></span></x-button>
+          <x-button plain type="primary" :link="'/accountant/order-detail-step?id=' + order.id">完成进度：<span v-html="order.status"></span></x-button>
         </cell-box>
         <cell-box>
-          <x-button type="primary" @click.native="isShow = true">完成订单</x-button>
+          <x-button type="primary" @click.native="onCompositionEnd()">完成订单</x-button>
         </cell-box>
       </group>
     </div>
@@ -59,7 +59,7 @@
     <div class="text-box" v-show="isShow">
       <div class="text-header">
         <x-button type="primary" mini @click.native="isShow = false">取消</x-button>
-        <x-button type="primary" mini @click.native="onCompleted(false)">提交</x-button>
+        <x-button type="primary" :disabled="!mark || markImgs.length === 0" mini @click.native="onCompleted(false)">提交</x-button>
       </div>
       <group class="text-container">
         <x-textarea ref="textarea" required :rows="10" :max="1000" :placeholder="'备注，审核资料'" v-model="mark"></x-textarea>
@@ -117,19 +117,24 @@
       async onPay () {
         if (this.order.rob_depost === 0) {
           const res = await api.robing()
+          let self = this
           if (res.code === 20000) {
-            let self = this
             this.$vux.alert.show({
               title: '提示',
               content: '抢单成功！',
               onHide () {
-                self.$router.replace('/progress')
+                self.$router.replace('/accountant/progress')
               }
             })
           } else {
             this.$vux.alert.show({
               title: '提示',
-              content: res.message
+              content: res.message,
+              onHide () {
+                if (res.code === 402 || res.code === 405) {
+                  self.$router.replace('/accountant/login?path=order')
+                }
+              }
             })
           }
         } else {
@@ -138,31 +143,45 @@
             title: '提示',
             content: '暂不支持支付！',
             onHide () {
-              self.$router.replace('/canOrder')
+              self.$router.replace('/accountant/canOrder')
             }
           })
         }
       },
       async onCompleted () {
-        const res = await api.robOrdering()
+        this.$vux.loading.show({
+          text: 'Loading'
+        })
+        const res = await api.postComplete({
+          id: this.order.id,
+          images: this.markImgs.join(','),
+          remark: this.mark
+        })
+        this.$vux.loading.hide()
+        let self = this
         if (res.code === 20000) {
           let self = this
           this.$vux.alert.show({
             title: '提示',
             content: '！',
             onHide () {
-              self.$router.replace('/progress')
+              self.$router.replace('/accountant/progress')
             }
           })
         } else {
           this.$vux.alert.show({
             title: '提示',
-            content: res.message
+            content: res.message,
+            onHide () {
+              if (res.code === 402 || res.code === 405) {
+                self.$router.replace('/accountant/login?path=order')
+              }
+            }
           })
         }
       },
       onFinished () {
-        this.$router.replace('/completed')
+        this.$router.replace('/accountant/completed')
       },
       miniUploaded (res) {
         this.$vux.loading.hide()
