@@ -57,15 +57,9 @@
       </group>
     </div>
     <div class="text-box" v-show="isShow">
-<<<<<<< HEAD
       <div class="text-header">
         <x-button type="primary" mini @click.native="isShow = false">取消</x-button>
         <x-button type="primary" :disabled="!mark || markImgs.length === 0" mini @click.native="onCompleted(false)">提交</x-button>
-=======
-      <div class="text-header clearfix">
-        <x-button type="取消" class="pull-left cancel" mini @click.native="isShow = false; mark = ''; markImgs = []">取消</x-button>
-        <x-button type="primary" class="pull-right" mini @click.native="onCompleted(false)">提交</x-button>
->>>>>>> 5459b910accb934bf5f21283325757fc4ac5b62e
       </div>
       <group class="text-container">
         <x-textarea ref="textarea" required :rows="10" :max="1000" :placeholder="'备注，审核资料'" v-model="mark"></x-textarea>
@@ -122,12 +116,8 @@
     methods: {
       async onPay () {
         if (this.order.rob_depost === 0) {
-<<<<<<< HEAD
-          const res = await api.robing()
           let self = this
-=======
           const res = await api.robing({id: this.order.id})
->>>>>>> 5459b910accb934bf5f21283325757fc4ac5b62e
           if (res.code === 20000) {
             this.$vux.alert.show({
               title: '提示',
@@ -175,11 +165,7 @@
             title: '提示',
             content: '已经提交！',
             onHide () {
-<<<<<<< HEAD
               self.$router.replace('/accountant/progress')
-=======
-              self.$router.replace('/completed')
->>>>>>> 5459b910accb934bf5f21283325757fc4ac5b62e
             }
           })
         } else {

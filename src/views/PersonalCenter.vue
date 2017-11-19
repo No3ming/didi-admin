@@ -1,15 +1,9 @@
 <template>
   <container class="center">
     <group :title="'我的赚钱'">
-<<<<<<< HEAD
       <cell title="账户金额(可提现)" :value="'¥' + amount" value-align="right" ></cell>
       <cell title="已结算金额" value="查看" value-align="right" link="/accountant/personal/amount/1"></cell>
       <cell title="已提现金额" value="查看" value-align="right" link="/accountant/personal/amount/2"></cell>
-=======
-      <cell title="账户金额(可提现)" :value="'¥' + amount" value-align="right" @click.native="onWithdraw"></cell>
-      <cell title="已结算金额" value="查看" value-align="right" link="/amount/1"></cell>
-      <cell title="已提现金额" value="查看" value-align="right" link="/amount/2"></cell>
->>>>>>> 5459b910accb934bf5f21283325757fc4ac5b62e
     </group>
     <group :title="'我的信息'">
       <cell title="我的信息(服务项目,城市,个人信息)" value="查看" value-align="right" link="/accountant/personal/my-info"></cell>

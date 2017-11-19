@@ -62,13 +62,8 @@
           title: '提示',
           content: res.message,
           onHide () {
-<<<<<<< HEAD
             if (res.code === 402 || res.code === 405) {
               self.$router.replace('/accountant/login?path=order')
-=======
-            if (res.code === 402) {
-              self.$router.replace('/login')
->>>>>>> 5459b910accb934bf5f21283325757fc4ac5b62e
             }
           }
         })
