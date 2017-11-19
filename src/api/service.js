@@ -8,7 +8,11 @@ import axios from 'axios'
 import store from '../store'
 import getCookie from '../utils/getCookie'
 
+<<<<<<< HEAD
 let token = store.getters.token || getCookie('user-token') || ''
+=======
+let token = store.getters.token || getCookie('token') || ''
+>>>>>>> 5459b910accb934bf5f21283325757fc4ac5b62e
 // 设置请求公共参数
 axios.defaults.timeout = 10000
 axios.defaults.baseURL = '/api'

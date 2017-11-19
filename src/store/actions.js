@@ -7,9 +7,15 @@ export const showLoading = ({ commit }) => {
   commit('UPDATE_LOADING', { status: true })
 }
 
+<<<<<<< HEAD
 export const upToken = ({ commit }, token, time) => {
   commit('UPDATE_TOKEN', token)
   setCookie('accountant-token', token, time || 50)
+=======
+export const upToken = ({ commit }, token) => {
+  // commit('UPDATE_TOKEN', token)
+  setCookie('token', token, 50)
+>>>>>>> 5459b910accb934bf5f21283325757fc4ac5b62e
 }
 
 export const upServiceList = ({ commit }, serviceList) => {
@@ -58,4 +64,9 @@ export const upProgressTotal = ({ commit }, progressTotal) => {
 
 export const upCompletedTotal = ({ commit }, completedTotal) => {
   commit('UPDATE_COMPLETE_TOTAL', completedTotal)
+}
+
+export const upIsCenter = ({ commit }, isCenter) => {
+  commit('UPDATE_IS_CENTER', isCenter)
+  window.sessionStorage.setItem('isCenter', isCenter)
 }

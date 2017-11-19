@@ -8,12 +8,11 @@
       </grid>
     </div>
     <div>
-      <div>待结算金额总额：<span v-html="total"></span></div>
       <x-table full-bordered style="background-color:#fff; table-layout:fixed" >
         <tbody>
         <tr v-for="(item, index) in list" :key="index" class="order-item">
-          <td v-html="item.status"></td>
           <td v-html="item.amount"></td>
+          <td v-html="item.status"></td>
           <td v-if="item.withdraw_at" v-html="item.withdraw_at"></td>
           <td v-if="item.frozen_at" v-html="item.frozen_at"></td>
         </tr>
@@ -21,13 +20,6 @@
       </x-table>
     </div>
     <divider class="no-more">没有更多数据了</divider>
-    <div>
-      <group>
-        <cell-box>
-          <x-button type="primary" >立即提现</x-button>
-        </cell-box>
-      </group>
-    </div>
   </container>
 </template>
 
@@ -38,16 +30,16 @@
   import api from '../api'
 
   export default {
-    name: 'canOrder',
+    name: 'amount',
     data () {
       return {
         status: null,
-        gridHeader: ['状态', '佣金', '时间'],
-        list: [],
-        total: 10000
+        gridHeader: ['佣金', '状态', '时间'],
+        list: []
       }
     },
     async mounted () {
+      console.log(1231)
       this.status = parseInt(this.$route.params['id'])
       console.log(this.status)
       let res
@@ -65,12 +57,18 @@
       if (res.code === 20000) {
         this.list = res.data.lists
       } else {
+        let self = this
         this.$vux.alert.show({
           title: '提示',
           content: res.message,
           onHide () {
+<<<<<<< HEAD
             if (res.code === 402 || res.code === 405) {
               self.$router.replace('/accountant/login?path=order')
+=======
+            if (res.code === 402) {
+              self.$router.replace('/login')
+>>>>>>> 5459b910accb934bf5f21283325757fc4ac5b62e
             }
           }
         })

@@ -28,8 +28,13 @@
   import {Blur, Group, Cell, XInput, XButton, CellBox, Flexbox, FlexboxItem} from 'vux'
   import defaultImg from '@/assets/header.jpg'
   import api from '../api'
+<<<<<<< HEAD
   import { mapActions } from 'vuex'
   import axios from 'axios'
+=======
+  import { mapActions, mapGetters } from 'vuex'
+  // import axios from 'axios'
+>>>>>>> 5459b910accb934bf5f21283325757fc4ac5b62e
 
   export default {
     name: 'login',
@@ -50,6 +55,7 @@
           if (res.code === 20000) {
             this.upToken(res.data.token)
             let self = this
+<<<<<<< HEAD
             let path = this.$route.query['path'] || 'order'
             this.$vux.alert.show({
               title: '登陆成功',
@@ -61,6 +67,16 @@
                   self.$router.replace('/accountant/personal')
                 } else {
                   self.$router.replace('/accountant/waitOrder')
+=======
+            this.$vux.alert.show({
+              title: '登陆成功',
+              onHide () {
+                if (self.isCenter === 'true' || self.isCenter === true) {
+                  console.log(1111)
+                  window.location.replace('/personal')
+                } else {
+                  window.location.replace('/canOrder')
+>>>>>>> 5459b910accb934bf5f21283325757fc4ac5b62e
                 }
               }
             })
@@ -90,6 +106,11 @@
       },
       ...mapActions([
         'upToken'
+      ])
+    },
+    computed: {
+      ...mapGetters([
+        'isCenter'
       ])
     },
     components: {

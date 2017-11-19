@@ -25,7 +25,7 @@
         <span class="title">服务佣金：</span>
         <span class="danger" v-html="order.commission_amount"></span>
       </cell-box>
-      <cell-box v-if="order.rob_depost">
+      <cell-box v-if="order.rob_depost || order.rob_depost === 0">
         <span class="title">抢单需支付保证金：</span>
         <span class="danger" type="warn" v-html="'¥' + order.rob_depost"></span>
       </cell-box>
@@ -35,7 +35,7 @@
       <divider class="tips">温馨提示：支付保证金即可抢得此单<br/>保证金在成功完成订单后一起退还</divider>
       <group>
         <cell-box>
-          <x-button type="primary" @click="onPay" v-html="order.rob_depost === 0? '立即抢单': '立即支付'"></x-button>
+          <x-button type="primary" @click.native="onPay" v-html="order.rob_depost === 0? '立即抢单': '立即支付'"></x-button>
         </cell-box>
       </group>
     </div>
@@ -57,9 +57,15 @@
       </group>
     </div>
     <div class="text-box" v-show="isShow">
+<<<<<<< HEAD
       <div class="text-header">
         <x-button type="primary" mini @click.native="isShow = false">取消</x-button>
         <x-button type="primary" :disabled="!mark || markImgs.length === 0" mini @click.native="onCompleted(false)">提交</x-button>
+=======
+      <div class="text-header clearfix">
+        <x-button type="取消" class="pull-left cancel" mini @click.native="isShow = false; mark = ''; markImgs = []">取消</x-button>
+        <x-button type="primary" class="pull-right" mini @click.native="onCompleted(false)">提交</x-button>
+>>>>>>> 5459b910accb934bf5f21283325757fc4ac5b62e
       </div>
       <group class="text-container">
         <x-textarea ref="textarea" required :rows="10" :max="1000" :placeholder="'备注，审核资料'" v-model="mark"></x-textarea>
@@ -116,8 +122,12 @@
     methods: {
       async onPay () {
         if (this.order.rob_depost === 0) {
+<<<<<<< HEAD
           const res = await api.robing()
           let self = this
+=======
+          const res = await api.robing({id: this.order.id})
+>>>>>>> 5459b910accb934bf5f21283325757fc4ac5b62e
           if (res.code === 20000) {
             this.$vux.alert.show({
               title: '提示',
@@ -163,9 +173,13 @@
           let self = this
           this.$vux.alert.show({
             title: '提示',
-            content: '！',
+            content: '已经提交！',
             onHide () {
+<<<<<<< HEAD
               self.$router.replace('/accountant/progress')
+=======
+              self.$router.replace('/completed')
+>>>>>>> 5459b910accb934bf5f21283325757fc4ac5b62e
             }
           })
         } else {
@@ -251,6 +265,7 @@
       line-height: 20px;
       text-align: right;
       padding: 10px;
+      overflow: hidden;
     }
 
     .text-container {
@@ -304,6 +319,16 @@
 
     .weui-cell__bd {
       font-size: 14px;
+    }
+
+    .pull-left {
+      float: left;
+    }
+    .pull-right {
+      float: right;
+    }
+    .cancel {
+      margin-top: 15px;
     }
   }
 
