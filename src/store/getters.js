@@ -33,4 +33,6 @@ export const progressTotal = state => state.progressTotal
 
 export const completedTotal = state => state.completedTotal
 
-export const isCenter = state => state.isCenter || window.sessionStorage.getItem('isCenter')
+export const isCenter = state => state.isCenter || window.sessionStorage.getItem('accountant-isCenter')
+
+export const isLogin = state => state.isLogin

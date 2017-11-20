@@ -16,5 +16,6 @@ export default {
   nowOrder: null,
   progressTotal: 0,
   completedTotal: 0,
-  isCenter: false
+  isCenter: false,
+  isLogin: false
 }

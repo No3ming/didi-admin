@@ -62,5 +62,9 @@ export const upCompletedTotal = ({ commit }, completedTotal) => {
 
 export const upIsCenter = ({ commit }, isCenter) => {
   commit('UPDATE_IS_CENTER', isCenter)
-  window.sessionStorage.setItem('isCenter', isCenter)
+  window.sessionStorage.setItem('accountant-isCenter', isCenter)
+}
+
+export const upIsLogin = ({ commit }, isLogin) => {
+  commit('UPDATE_IS_LOGIN', isLogin)
 }

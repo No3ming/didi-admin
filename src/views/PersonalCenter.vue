@@ -78,7 +78,7 @@
             title: '提示',
             content: '已经提交处理！',
             onHide () {
-              self.$router.replace('/personal')
+              self.$router.replace('/accountant/personal')
             }
           })
         } else {

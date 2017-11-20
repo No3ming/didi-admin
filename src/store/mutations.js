@@ -30,3 +30,5 @@ export const UPDATE_PROGRESS_TOTAL = (state, progressTotal) => { state.progressT
 export const UPDATE_COMPLETE_TOTAL = (state, completedTotal) => { state.completedTotal = completedTotal }
 
 export const UPDATE_IS_CENTER = (state, isCenter) => { state.isCenter = isCenter }
+
+export const UPDATE_IS_LOGIN = (state, isLogin) => { state.isLogin = isLogin }

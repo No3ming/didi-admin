@@ -58,7 +58,7 @@ const routes = [
     component: OrderDetailStep
   },
   {
-    path: '/accountant',
+    path: '/accountant/',
     name: 'login',
     component: Login
   },
@@ -129,6 +129,8 @@ router.beforeEach((to, from, next) => {
   switch (to.path) {
     case '/accountant/login':
     case '/accountant/':
+    case '/accountant':
+    case '/':
     case '/accountant/step1':
     case '/accountant/step2':
     case '/accountant/step3':
@@ -137,26 +139,24 @@ router.beforeEach((to, from, next) => {
     case '/accountant/forget':
       flag = true
       break
-    case '/personal':
-    case '/personal/my-info':
-      store.dispatch('upIsCenter', true)
+    case '/accountant/personal':
+    case '/accountant/personal/my-info':
       break
     default:
-      store.dispatch('upIsCenter', false)
       flag = false
       break
   }
   if (!store.getters.token && !flag) {
-    next({ path: '/accountant/login' })
+    next({ path: '/accountant/login?path=' + path })
   } else if (!store.getters.token && flag) {
-    if (to.path === '/') {
-      next({path: '/accountant/login'})
+    if (to.path === '/accountant/' || to.path === '/accountant') {
+      next({path: '/accountant/login?path=' + path})
     } else {
       next()
     }
   } else {
     if ((to.path === '/accountant/' || to.path === '/accountant') && path !== 'center') {
-      next({path: '/user/waitOrder'})
+      next({path: '/accountant/canOrder'})
     } else if ((to.path === '/accountant/' || to.path === '/accountant') && path === 'center') {
       next({path: '/accountant/personal'})
     } else {
@@ -168,6 +168,8 @@ router.beforeEach((to, from, next) => {
 router.afterEach(to => {
   switch (to.path) {
     case '/accountant/':
+    case '/':
+    case '/accountant':
     case '/accountant/login':
     case '/accountant/canOrder':
       document.title = '我要接单'
