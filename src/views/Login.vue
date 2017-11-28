@@ -56,7 +56,7 @@
               title: '登陆成功',
               onHide () {
                 axios.defaults.params = {token: res.data.token}
-                self.upIsCenter(window.sessionStorage.getItem('accountant-isCenter') === 'true')
+                // self.upIsCenter(window.sessionStorage.getItem('accountant-isCenter') === 'true')
                 if (path === 'center') {
                   self.$router.replace('/accountant/personal')
                 } else {
@@ -89,14 +89,14 @@
         this.$router.push('/accountant/step1')
       },
       ...mapActions([
-        'upToken'
+        'upToken',
+        'upIsLogin',
+        'upIsCenter'
       ])
     },
     computed: {
       ...mapGetters([
-        'isCenter',
-        'upIsLogin',
-        'upIsCenter'
+        'isCenter'
       ])
     },
     components: {
